@@ -15,7 +15,7 @@ var triangleCoords = floatArrayOf(     // in counterclockwise order:
     -0.5f, -0.311004243f, 0.0f,    // bottom left
     0.5f, -0.311004243f, 0.0f      // bottom right
 )
-
+//Triangle class
 class Triangle {
 
     // Set color with red, green, blue and alpha (opacity) values

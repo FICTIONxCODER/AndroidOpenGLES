@@ -15,7 +15,7 @@ var squareCoords = floatArrayOf(
     0.5f, -0.5f, 0.0f,      // bottom right
     0.5f,  0.5f, 0.0f       // top right
 )
-//Square
+//Square class
 class Square {
 
     private val drawOrder = shortArrayOf(0, 1, 2, 0, 2, 3) // order to draw vertices
