@@ -11,9 +11,13 @@ class MainActivity : AppCompatActivity() {
     // Call back when the activity is started, to initialize the view
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        glView = GLSurfaceView(this) // Allocate a GLSurfaceView
+        /*glView = MyGLSurfaceView(this) // Allocate a GLSurfaceView
         glView!!.setRenderer(MyGLRenderer(applicationContext)) // Use a custom renderer
-        this.setContentView(glView) // This activity sets to GLSurfaceView
+        this.setContentView(glView) // This activity sets to GLSurfaceView*/
+
+        // Allocate a custom subclass of GLSurfaceView (NEW)
+        glView = MyGLSurfaceView(this);
+        setContentView(glView);  // Set View (NEW)
     }
 
     // Call back when the activity is going into the background
