@@ -15,6 +15,18 @@ class MyGLRenderer : GLSurfaceView.Renderer {
     private var pyramid : Pyramid? = null
     private var cube : Cube? = null
 
+    // For controlling cube's z-position, x and y angles and speeds (NEW)
+    var angleX = 0f // (NEW)
+
+    var angleY = 0f // (NEW)
+
+    var speedX = 0f // (NEW)
+
+    var speedY = 0f // (NEW)
+
+    var z = -6.0f // (NEW)
+
+
     private var anglePyramid = 0f // Rotational angle in degree for pyramid (NEW)
 
     private var angleCube = 0f // Rotational angle in degree for cube (NEW)
@@ -31,11 +43,11 @@ class MyGLRenderer : GLSurfaceView.Renderer {
     constructor(context: Context?) {
         this.context = context
 
-        triangle = Triangle()
+        //triangle = Triangle()
 
-        quad = Square()
+        //quad = Square()
 
-        pyramid = Pyramid() // (NEW)
+        //pyramid = Pyramid() // (NEW)
 
         cube = Cube() // (NEW)
 
@@ -100,7 +112,7 @@ class MyGLRenderer : GLSurfaceView.Renderer {
         quad!!.draw(gl) // Draw quad ( NEW )*/
 
 
-        // ----- Render the Pyramid -----
+       /* // ----- Render the Pyramid -----
         gl.glLoadIdentity();                 // Reset the model-view matrix
         gl.glTranslatef(-1.5f, 0.0f, -6.0f); // Translate left and into the screen
         gl.glRotatef(anglePyramid, 0.1f, 1.0f, -0.1f); // Rotate (NEW)
@@ -115,6 +127,17 @@ class MyGLRenderer : GLSurfaceView.Renderer {
 
         // Update the rotational angle after each refresh (NEW)
         anglePyramid += speedPyramid;   // (NEW)
-        angleCube += speedCube;         // (NEW)
+        angleCube += speedCube;         // (NEW)        */
+
+        // ----- Render the Cube -----
+        gl.glLoadIdentity();              // Reset the model-view matrix
+        gl.glTranslatef(0.0f, 0.0f, z)   // Translate into the screen (NEW)
+        gl.glRotatef(angleX, 1.0f, 0.0f, 0.0f) // Rotate (NEW)
+        gl.glRotatef(angleY, 0.0f, 1.0f, 0.0f) // Rotate (NEW)
+        cube?.draw(gl)
+
+        // Update the rotational angle after each refresh (NEW)
+        angleX += speedX;  // (NEW)
+        angleY += speedY;  // (NEW)
     }
 }
