@@ -1,71 +1,120 @@
 package com.bea.vieweropengl
 
+import android.content.Context
+import android.opengl.GLSurfaceView
+import android.opengl.GLU
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
-import android.opengl.GLES20
-import android.opengl.GLSurfaceView
-import android.opengl.Matrix
 
 class MyGLRenderer : GLSurfaceView.Renderer {
 
-    private lateinit var mTriangle: Triangle
-    private lateinit var mSquare: Square
+    var triangle : Triangle? = null
+    var quad: Square? = null
 
-    // vPMatrix is an abbreviation for "Model View Projection Matrix"
-    private val vPMatrix = FloatArray(16)
-    private val projectionMatrix = FloatArray(16)
-    private val viewMatrix = FloatArray(16)
+    private var pyramid : Pyramid? = null
+    private var cube : Cube? = null
 
-    companion object {
-        fun loadShader(type: Int, shaderCode: String): Int {
+    private var anglePyramid = 0f // Rotational angle in degree for pyramid (NEW)
 
-            // create a vertex shader type (GLES20.GL_VERTEX_SHADER)
-            // or a fragment shader type (GLES20.GL_FRAGMENT_SHADER)
-            return GLES20.glCreateShader(type).also { shader ->
+    private var angleCube = 0f // Rotational angle in degree for cube (NEW)
 
-                // add the source code to the shader and compile it
-                GLES20.glShaderSource(shader, shaderCode)
-                GLES20.glCompileShader(shader)
-            }
-        }
+    private val speedPyramid = 2.0f // Rotational speed for pyramid (NEW)
+
+    private val speedCube = -1.5f // Rotational speed for cube (NEW)
+
+
+    // Application's context
+    var context : Context? = null
+
+    // Constructor with global application context
+    constructor(context: Context?) {
+        this.context = context
+
+        triangle = Triangle()
+
+        quad = Square()
+
+        pyramid = Pyramid() // (NEW)
+
+        cube = Cube() // (NEW)
+
+
     }
 
-    override fun onSurfaceCreated(unused: GL10, config: EGLConfig) {
-        // Set the background frame color
-        GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f)
+    // Call back when the surface is first created or re-created
+    override fun onSurfaceCreated(gl: GL10, config: EGLConfig?) {
+        gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f) // Set color's clear-value to black
+        gl.glClearDepthf(1.0f) // Set depth's clear-value to farthest
+        gl.glEnable(GL10.GL_DEPTH_TEST) // Enables depth-buffer for hidden surface removal
+        gl.glDepthFunc(GL10.GL_LEQUAL) // The type of depth testing to do
+        gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_NICEST) // nice perspective view
+        gl.glShadeModel(GL10.GL_SMOOTH) // Enable smooth shading of color
+        gl.glDisable(GL10.GL_DITHER) // Disable dithering for better performance
 
-        // initialize a triangle
-        mTriangle = Triangle()
-        // initialize a square
-        mSquare = Square()
+        // You OpenGL|ES initialization code here
+        // ......
     }
 
-    override fun onDrawFrame(unused: GL10) {
-        // Redraw background color
-        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT)
+    // Call back after onSurfaceCreated() or whenever the window's size changes
+    override fun onSurfaceChanged(gl: GL10, width: Int, height: Int) {
+        var height = height
+        if (height == 0) height = 1 // To prevent divide by zero
+        val aspect = width.toFloat() / height
 
-        // Set the camera position (View matrix)
-        Matrix.setLookAtM(viewMatrix, 0, 0f, 0f, -3f, 0f, 0f, 0f, 0f, 1.0f, 0.0f)
+        // Set the viewport (display area) to cover the entire window
+        gl.glViewport(0, 0, width, height)
 
-        // Calculate the projection and view transformation
-        Matrix.multiplyMM(vPMatrix, 0, projectionMatrix, 0, viewMatrix, 0)
+        // Setup perspective projection, with aspect ratio matches viewport
+        gl.glMatrixMode(GL10.GL_PROJECTION) // Select projection matrix
+        gl.glLoadIdentity() // Reset projection matrix
+        // Use perspective projection
+        GLU.gluPerspective(gl, 45f, aspect, 0.1f, 100f)
+        gl.glMatrixMode(GL10.GL_MODELVIEW) // Select model-view matrix
+        gl.glLoadIdentity() // Reset
 
-        // Draw shape
-        mTriangle.draw(vPMatrix)
-
-        //mTriangle.draw()
+        // You OpenGL|ES display re-sizing code here
+        // ......
     }
 
-    override fun onSurfaceChanged(unused: GL10, width: Int, height: Int) {
-        GLES20.glViewport(0, 0, width, height)
+    // Call back to draw the current frame.
+    override fun onDrawFrame(gl: GL10) {
+        // Clear color and depth buffers using clear-value set earlier
+        gl.glClear(GL10.GL_COLOR_BUFFER_BIT or GL10.GL_DEPTH_BUFFER_BIT)
 
-        val ratio: Float = width.toFloat() / height.toFloat()
+        /*// You OpenGL|ES rendering code here
+        // Clear color and depth buffers using clear-values set earlier
+        gl.glClear(GL10.GL_COLOR_BUFFER_BIT or GL10.GL_DEPTH_BUFFER_BIT)
 
-        // this projection matrix is applied to object coordinates
-        // in the onDrawFrame() method
-        Matrix.frustumM(projectionMatrix, 0, -ratio, ratio, -1f, 1f, 3f, 7f)
+        gl.glLoadIdentity() // Reset model-view matrix ( NEW )
+
+        gl.glTranslatef(-1.5f, 0.0f, -6.0f) // Translate left and into the screen ( NEW )
+
+        triangle!!.draw(gl) // Draw triangle ( NEW )
+
+
+        // Translate right, relative to the previous translation ( NEW )
+
+        // Translate right, relative to the previous translation ( NEW )
+        gl.glTranslatef(3.0f, 0.0f, 0.0f)
+        quad!!.draw(gl) // Draw quad ( NEW )*/
+
+
+        // ----- Render the Pyramid -----
+        gl.glLoadIdentity();                 // Reset the model-view matrix
+        gl.glTranslatef(-1.5f, 0.0f, -6.0f); // Translate left and into the screen
+        gl.glRotatef(anglePyramid, 0.1f, 1.0f, -0.1f); // Rotate (NEW)
+        pyramid?.draw(gl);                              // Draw the pyramid (NEW)
+
+        // ----- Render the Color Cube -----
+        gl.glLoadIdentity();                // Reset the model-view matrix
+        gl.glTranslatef(1.5f, 0.0f, -6.0f); // Translate right and into the screen
+        gl.glScalef(0.8f, 0.8f, 0.8f);      // Scale down (NEW)
+        gl.glRotatef(angleCube, 1.0f, 1.0f, 1.0f); // rotate about the axis (1,1,1) (NEW)
+        cube?.draw(gl);                      // Draw the cube (NEW)
+
+        // Update the rotational angle after each refresh (NEW)
+        anglePyramid += speedPyramid;   // (NEW)
+        angleCube += speedCube;         // (NEW)
     }
-
-
 }
