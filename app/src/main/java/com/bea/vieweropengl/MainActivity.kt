@@ -1,17 +1,30 @@
 package com.bea.vieweropengl
 
 import android.opengl.GLSurfaceView
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var gLView: GLSurfaceView
+    // Use GLSurfaceView
+    private var glView : GLSurfaceView? = null
 
-    public override fun onCreate(savedInstanceState: Bundle?) {
+    // Call back when the activity is started, to initialize the view
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        glView = GLSurfaceView(this) // Allocate a GLSurfaceView
+        glView!!.setRenderer(MyGLRenderer(applicationContext)) // Use a custom renderer
+        this.setContentView(glView) // This activity sets to GLSurfaceView
+    }
 
-        // Create a GLSurfaceView instance and set it as the ContentView for this Activity.
-        gLView = MyGLSurfaceView(this)
-        setContentView(gLView)
+    // Call back when the activity is going into the background
+    override fun onPause() {
+        super.onPause()
+        glView!!.onPause()
+    }
+
+    // Call back after onPause()
+    override fun onResume() {
+        super.onResume()
+        glView!!.onResume()
     }
 }

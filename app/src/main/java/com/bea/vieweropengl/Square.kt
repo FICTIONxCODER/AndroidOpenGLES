@@ -4,41 +4,39 @@ package com.bea.vieweropengl
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
-import java.nio.ShortBuffer
+import javax.microedition.khronos.opengles.GL10
 
 
-// number of coordinates per vertex in this array
-//const val COORDS_PER_VERTEX = 3
-var squareCoords = floatArrayOf(
-    -0.5f,  0.5f, 0.0f,      // top left
-    -0.5f, -0.5f, 0.0f,      // bottom left
-    0.5f, -0.5f, 0.0f,      // bottom right
-    0.5f,  0.5f, 0.0f       // top right
-)
 //Square class
 class Square {
+    private var vertexBuffer // Buffer for vertex-array
+            : FloatBuffer? = null
 
-    private val drawOrder = shortArrayOf(0, 1, 2, 0, 2, 3) // order to draw vertices
+    private val vertices = floatArrayOf( // Vertices for the square
+            -1.0f, -1.0f, 0.0f,  // 0. left-bottom
+            1.0f, -1.0f, 0.0f,  // 1. right-bottom
+            -1.0f, 1.0f, 0.0f,  // 2. left-top
+            1.0f, 1.0f, 0.0f // 3. right-top
+    )
 
-    // initialize vertex byte buffer for shape coordinates
-    private val vertexBuffer: FloatBuffer =
-        // (# of coordinate values * 4 bytes per float)
-        ByteBuffer.allocateDirect(squareCoords.size * 4).run {
-            order(ByteOrder.nativeOrder())
-            asFloatBuffer().apply {
-                put(squareCoords)
-                position(0)
-            }
-        }
+    // Constructor - Setup the vertex buffer
+    constructor() {
+        // Setup vertex array buffer. Vertices in float. A float has 4 bytes
+        val vbb = ByteBuffer.allocateDirect(vertices.size * 4)
+        vbb.order(ByteOrder.nativeOrder()) // Use native byte order
+        vertexBuffer = vbb.asFloatBuffer() // Convert from byte to float
+        vertexBuffer?.put(vertices) // Copy data into buffer
+        vertexBuffer?.position(0) // Rewind
+    }
 
-    // initialize byte buffer for the draw list
-    private val drawListBuffer: ShortBuffer =
-        // (# of coordinate values * 2 bytes per short)
-        ByteBuffer.allocateDirect(drawOrder.size * 2).run {
-            order(ByteOrder.nativeOrder())
-            asShortBuffer().apply {
-                put(drawOrder)
-                position(0)
-            }
-        }
+    // Render the shape
+    fun draw(gl: GL10) {
+        // Enable vertex-array and define its buffer
+        gl.glEnableClientState(GL10.GL_VERTEX_ARRAY)
+        gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer)
+        gl.glColor4f(0.5f, 0.5f, 1.0f, 1.0f);      // Set the current color (NEW)
+        // Draw the primitives from the vertex-array directly
+        gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, vertices.size / 3)
+        gl.glDisableClientState(GL10.GL_VERTEX_ARRAY)
+    }
 }
