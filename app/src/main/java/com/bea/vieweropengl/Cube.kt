@@ -1,16 +1,13 @@
 package com.bea.vieweropengl
-
+//  Created by BEA on 2021.
+//  Copyright © 2021 BEA. All rights reserved.
+import android.opengl.GLES10.glBlendFunc
+import android.opengl.GLES10.glEnable
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
 import javax.microedition.khronos.opengles.GL10
-
-
-
-
-//  Created by BEA on 2021.
-//  Copyright © 2021 BEA. All rights reserved.
-
+import javax.microedition.khronos.opengles.GL10.*
 
 class Cube {
     // Buffer for vertex-array
@@ -19,7 +16,7 @@ class Cube {
 
     private val colors = arrayOf(floatArrayOf(1.0f, 0.5f, 0.0f, 1.0f),
             floatArrayOf(1.0f, 0.0f, 1.0f, 1.0f),
-            floatArrayOf(0.0f, 1.0f, 0.0f, 1.0f),
+            floatArrayOf(0.0f, 0.0f, 1.0f, 1.0f),
             floatArrayOf(0.0f, 0.0f, 1.0f, 1.0f),
             floatArrayOf(1.0f, 0.0f, 0.0f, 1.0f),
             floatArrayOf(1.0f, 1.0f, 0.0f, 1.0f))
@@ -75,6 +72,9 @@ class Cube {
         gl.glCullFace(GL10.GL_BACK) // Cull the back face (don't display)
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY)
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer)
+
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+        glEnable( GL_BLEND )
 
         // Render all the faces
         for (face in 0 until numFaces) {
