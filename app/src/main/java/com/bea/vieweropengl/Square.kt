@@ -9,8 +9,8 @@ import javax.microedition.khronos.opengles.GL10
 
 //Square class
 class Square {
-    private var vertexBuffer // Buffer for vertex-array
-            : FloatBuffer? = null
+    // Buffer for vertex-array
+    private var vertexBuffer : FloatBuffer? = null
 
     private val vertices = floatArrayOf( // Vertices for the square
             -1.0f, -1.0f, 0.0f,  // 0. left-bottom
