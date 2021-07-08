@@ -18,6 +18,8 @@ class MyGLRenderer : GLSurfaceView.Renderer {
     private var leftdoor : LeftDoor? = null
     private var rightDoor : RightDoor? = null
 
+    private var circle:Circle? = null
+
     // For controlling cube's z-position, x and y angles and speeds (NEW)
     var angleX = 0f // (NEW)
 
@@ -46,7 +48,7 @@ class MyGLRenderer : GLSurfaceView.Renderer {
     constructor(context: Context?) {
         this.context = context
 
-        //triangle = Triangle()
+        triangle = Triangle()
 
         //quad = Square()
 
@@ -56,6 +58,8 @@ class MyGLRenderer : GLSurfaceView.Renderer {
 
         leftdoor = LeftDoor()
         rightDoor = RightDoor()
+
+        circle = Circle()
     }
 
     // Call back when the surface is first created or re-created
@@ -137,6 +141,10 @@ class MyGLRenderer : GLSurfaceView.Renderer {
         anglePyramid += speedPyramid;   // (NEW)
         angleCube += speedCube;         // (NEW)        */
 
+        // Update the rotational angle after each refresh (NEW)
+        angleX += speedX;  // (NEW)
+        angleY += speedY;  // (NEW)
+
         // ----- Render the Cube -----
         gl.glLoadIdentity();              // Reset the model-view matrix
         gl.glTranslatef(0.0f, 0.0f, z)   // Translate into the screen (NEW)
@@ -146,9 +154,8 @@ class MyGLRenderer : GLSurfaceView.Renderer {
         leftdoor?.draw(gl)
         rightDoor?.draw(gl)
 
-
-        // Update the rotational angle after each refresh (NEW)
-        angleX += speedX;  // (NEW)
-        angleY += speedY;  // (NEW)
+        //virtual push button
+        gl.glTranslatef(0f, 0.0f, 2.0f) // Translate left and into the screen ( NEW )
+        circle?.draw(gl) // Draw triangle ( NEW )
     }
 }

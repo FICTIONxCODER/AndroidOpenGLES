@@ -5,17 +5,26 @@ import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
 import javax.microedition.khronos.opengles.GL10
-//Square class
-class Square {
+
+class Circle {
     // Buffer for vertex-array
-    private var vertexBuffer : FloatBuffer? = null
+    private var vertexBuffer: FloatBuffer? = null
 
     // Vertices for the square
     private val vertices = floatArrayOf(
-            -1.0f, -1.0f, 0.0f,  // 0. left-bottom
-            1.0f, -1.0f, 0.0f,  // 1. right-bottom
-            -1.0f, 1.0f, 0.0f,  // 2. left-top
-            1.0f, 1.0f, 0.0f // 3. right-top
+            -1.0f, -1.0f, -1.0f,  // 0. left-bottom
+            0.0f, -1.0f, -1.5f,  // 1. right-bottom
+            0.0f, -1.0f, 0.0f,
+            1.0f, -1.0f, -1.0f,  // 2. left-top
+            1.5f, -1.0f, 0.0f, // 3. right-top
+            0.0f, -1.0f, 0.0f,
+            1.0f, -1.0f, 1.0f,  // 2. left-top
+            0.0f, -1.0f, 1.5f, // 3. right-top
+            0.0f, -1.0f, 0.0f,
+            -1.0f, -1.0f, 1.0f,  // 2. left-top
+            -1.5f, -1.0f, 0.0f, // 3. right-top
+            0.0f, -1.0f, 0.0f,
+            -1.0f, -1.0f, -1.0f
     )
 
     // Constructor - Setup the vertex buffer
@@ -38,4 +47,6 @@ class Square {
         gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, vertices.size / 3)
         gl.glDisableClientState(GL10.GL_VERTEX_ARRAY)
     }
+
+
 }
