@@ -28,28 +28,28 @@ class RightDoor {
             1.0f, 1.0f, 1.0f,  // 2. left-top-front
             2.0f, 1.0f, 1.0f,  // 3. right-top-front
             // BACK
-            2.0f, -1.0f, 0.0f,  // 6. right-bottom-back
-            1.0f, -1.0f, 0.0f,  // 4. left-bottom-back
-            2.0f, 1.0f, 0.0f,  // 7. right-top-back
-            1.0f, 1.0f, 0.0f,  // 5. left-top-back
+            2.0f, -1.0f, 0.7f,  // 6. right-bottom-back
+            1.0f, -1.0f, 0.7f,  // 4. left-bottom-back
+            2.0f, 1.0f, 0.7f,  // 7. right-top-back
+            1.0f, 1.0f, 0.7f,  // 5. left-top-back
             // LEFT
-            1.0f, -1.0f, 0.0f,  // 4. left-bottom-back
+            1.0f, -1.0f, 0.7f,  // 4. left-bottom-back
             1.0f, -1.0f, 1.0f,  // 0. left-bottom-front
-            1.0f, 1.0f, 0.0f,  // 5. left-top-back
+            1.0f, 1.0f, 0.7f,  // 5. left-top-back
             1.0f, 1.0f, 1.0f,  // 2. left-top-front
             // RIGHT
             2.0f, -1.0f, 1.0f,  // 1. right-bottom-front
-            2.0f, -1.0f, 0.0f,  // 6. right-bottom-back
+            2.0f, -1.0f, 0.7f,  // 6. right-bottom-back
             2.0f, 1.0f, 1.0f,  // 3. right-top-front
-            2.0f, 1.0f, 0.0f,  // 7. right-top-back
+            2.0f, 1.0f, 0.7f,  // 7. right-top-back
             // TOP
             1.0f, 1.0f, 1.0f,  // 2. left-top-front
             2.0f, 1.0f, 1.0f,  // 3. right-top-front
-            1.0f, 1.0f, 0.0f,  // 5. left-top-back
-            2.0f, 1.0f, 0.0f,  // 7. right-top-back
+            1.0f, 1.0f, 0.7f,  // 5. left-top-back
+            2.0f, 1.0f, 0.7f,  // 7. right-top-back
             // BOTTOM
-            1.0f, -1.0f, 0.0f,  // 4. left-bottom-back
-            2.0f, -1.0f, 0.0f,  // 6. right-bottom-back
+            1.0f, -1.0f, 0.7f,  // 4. left-bottom-back
+            2.0f, -1.0f, 0.7f,  // 6. right-bottom-back
             1.0f, -1.0f, 1.0f,  // 0. left-bottom-front
             2.0f, -1.0f, 1.0f // 1. right-bottom-front
     )

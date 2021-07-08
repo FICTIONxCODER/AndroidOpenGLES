@@ -141,6 +141,10 @@ class MyGLRenderer : GLSurfaceView.Renderer {
         anglePyramid += speedPyramid;   // (NEW)
         angleCube += speedCube;         // (NEW)        */
 
+        // Update the rotational angle after each refresh (NEW)
+        angleX += speedX;  // (NEW)
+        angleY += speedY;  // (NEW)
+
         // ----- Render the Cube -----
         gl.glLoadIdentity();              // Reset the model-view matrix
         gl.glTranslatef(0.0f, 0.0f, z)   // Translate into the screen (NEW)
@@ -152,10 +156,6 @@ class MyGLRenderer : GLSurfaceView.Renderer {
 
         //virtual push button
         gl.glTranslatef(0f, 0.0f, 2.0f) // Translate left and into the screen ( NEW )
-        circle!!.draw(gl) // Draw triangle ( NEW )
-
-        // Update the rotational angle after each refresh (NEW)
-        angleX += speedX;  // (NEW)
-        angleY += speedY;  // (NEW)
+        circle?.draw(gl) // Draw triangle ( NEW )
     }
 }
