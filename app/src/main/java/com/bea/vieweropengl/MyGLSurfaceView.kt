@@ -31,8 +31,8 @@ class MyGLSurfaceView: GLSurfaceView {
             KeyEvent.KEYCODE_DPAD_RIGHT -> renderer!!.speedY += 0.1f
             KeyEvent.KEYCODE_DPAD_UP -> renderer!!.speedX -= 0.1f
             KeyEvent.KEYCODE_DPAD_DOWN -> renderer!!.speedX += 0.1f
-            KeyEvent.KEYCODE_VOLUME_UP -> renderer!!.z -= 0.2f
-            KeyEvent.KEYCODE_VOLUME_DOWN -> renderer!!.z += 0.2f
+            KeyEvent.KEYCODE_VOLUME_DOWN -> renderer!!.z -= 0.2f
+            KeyEvent.KEYCODE_VOLUME_UP -> renderer!!.z += 0.2f
         }
         return true // Event handled
     }
