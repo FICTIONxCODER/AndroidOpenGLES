@@ -13,12 +13,12 @@ class RightDoor {
     private var vertexBuffer : FloatBuffer? = null
     private val numFaces = 6
 
-    private val colors = arrayOf(floatArrayOf(0.0f, 1.0f, 0.0f, 1.0f),
+    /*private val colors = arrayOf(floatArrayOf(0.0f, 1.0f, 0.0f, 1.0f),
             floatArrayOf(0.0f, 1.0f, 0.0f, 1.0f),
             floatArrayOf(0.0f, 1.0f, 0.0f, 1.0f),
             floatArrayOf(0.0f, 1.0f, 0.0f, 1.0f),
             floatArrayOf(0.0f, 1.0f, 0.0f, 1.0f),
-            floatArrayOf(0.0f, 1.0f, 0.0f, 1.0f))
+            floatArrayOf(0.0f, 1.0f, 0.0f, 1.0f))*/
 
     // Vertices of the 6 faces
     private val vertices = floatArrayOf(
@@ -78,7 +78,8 @@ class RightDoor {
         // Render all the faces
         for (face in 0 until numFaces) {
             // Set the color for each of the faces
-            gl.glColor4f(colors[face][0], colors[face][1], colors[face][2], colors[face][3])
+            //gl.glColor4f(colors[face][0], colors[face][1], colors[face][2], colors[face][3])
+            gl.glColor4f(0.5f,0.7f,0.5f,0.7f)
             // Draw the primitive from the vertex-array directly
             gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, face * 4, 4)
         }
