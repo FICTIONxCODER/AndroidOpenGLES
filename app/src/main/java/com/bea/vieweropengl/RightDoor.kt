@@ -79,7 +79,7 @@ class RightDoor {
         for (face in 0 until numFaces) {
             // Set the color for each of the faces
             //gl.glColor4f(colors[face][0], colors[face][1], colors[face][2], colors[face][3])
-            gl.glColor4f(0.5f,0.7f,0.5f,0.5f)
+            gl.glColor4f(0.5f,0.7f,0.5f,0.7f)
             // Draw the primitive from the vertex-array directly
             gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, face * 4, 4)
         }

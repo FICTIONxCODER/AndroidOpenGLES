@@ -18,8 +18,11 @@ class MyGLRenderer : GLSurfaceView.Renderer {
     private var leftdoor : LeftDoor? = null
     private var rightDoor : RightDoor? = null
 
-    private var circle:Circle? = null
+    //private var circle:Circle? = null
 
+    private var sensorCone:cone? = null
+    private var pushButton:pushButton? = null
+    private var virtualPushButton:VirtualPushButton? =null
     // For controlling cube's z-position, x and y angles and speeds (NEW)
     var angleX = 0f // (NEW)
 
@@ -59,7 +62,10 @@ class MyGLRenderer : GLSurfaceView.Renderer {
         leftdoor = LeftDoor()
         rightDoor = RightDoor()
 
-        circle = Circle()
+        //circle = Circle()
+        sensorCone = cone()
+        pushButton = pushButton()
+        virtualPushButton = VirtualPushButton()
     }
 
     // Call back when the surface is first created or re-created
@@ -156,6 +162,10 @@ class MyGLRenderer : GLSurfaceView.Renderer {
 
         //virtual push button
         gl.glTranslatef(0f, 0.0f, 2.0f) // Translate left and into the screen ( NEW )
-        circle?.draw(gl) // Draw triangle ( NEW )
+        //circle?.draw(gl) // Draw circle ( NEW )
+        pushButton?.draw(gl)
+        virtualPushButton?.draw(gl)
+        sensorCone?.draw(gl)
+
     }
 }
