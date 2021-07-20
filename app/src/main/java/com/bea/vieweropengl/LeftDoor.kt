@@ -72,8 +72,8 @@ class LeftDoor {
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY)
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer)
 
-        GLES10.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA)
-        GLES10.glEnable(GL10.GL_BLEND)
+        //GLES10.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA)
+        //GLES10.glEnable(GL10.GL_BLEND)
 
         // Render all the faces
         for (face in 0 until numFaces) {

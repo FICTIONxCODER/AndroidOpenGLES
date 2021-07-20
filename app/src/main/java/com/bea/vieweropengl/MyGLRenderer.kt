@@ -11,7 +11,7 @@ import javax.microedition.khronos.opengles.GL10
 class MyGLRenderer : GLSurfaceView.Renderer {
 
     var triangle : Triangle? = null
-    var quad: Square? = null
+    //var quad: Square? = null
     private var pyramid : Pyramid? = null
 
     private var cube : Cube? = null
@@ -71,10 +71,10 @@ class MyGLRenderer : GLSurfaceView.Renderer {
     // Call back when the surface is first created or re-created
     override fun onSurfaceCreated(gl: GL10, config: EGLConfig?) {
         //Blend & transpency
-        /*glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
         glEnable( GL_BLEND )
-        glClearColor(0.0f,0.0f,0.0f,0.5f)*/
-        gl.glClearColor(1.0f, 01.0f, 01.0f, 1.0f) // Set color's clear-value to black
+        //glClearColor(0.0f,0.0f,0.0f,0.5f)
+        gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f) // Set color's clear-value to black
         gl.glClearDepthf(1.0f) // Set depth's clear-value to farthest
         gl.glEnable(GL10.GL_DEPTH_TEST) // Enables depth-buffer for hidden surface removal
         gl.glDepthFunc(GL10.GL_LEQUAL) // The type of depth testing to do
@@ -82,8 +82,6 @@ class MyGLRenderer : GLSurfaceView.Renderer {
         gl.glShadeModel(GL10.GL_SMOOTH) // Enable smooth shading of color
         gl.glDisable(GL10.GL_DITHER) // Disable dithering for better performance
 
-        // You OpenGL|ES initialization code here
-        // ......
     }
 
     // Call back after onSurfaceCreated() or whenever the window's size changes
@@ -153,15 +151,17 @@ class MyGLRenderer : GLSurfaceView.Renderer {
 
         // ----- Render the Cube -----
         gl.glLoadIdentity();              // Reset the model-view matrix
-        gl.glTranslatef(0.0f, 0.0f, z)   // Translate into the screen (NEW)
-        gl.glRotatef(angleX, 1.0f, 0.0f, 0.0f) // Rotate (NEW)
-        gl.glRotatef(angleY, 0.0f, 1.0f, 0.0f) // Rotate (NEW)
+        gl.glTranslatef(0.0f, 0.0f, z)   // Translate into the screen
+        gl.glRotatef(angleX, 1.0f, 0.0f, 0.0f) // Rotate
+        gl.glRotatef(angleY, 0.0f, 1.0f, 0.0f) // Rotate
         cube?.draw(gl)
         leftdoor?.draw(gl)
         rightDoor?.draw(gl)
 
+
+        //quad!!.draw(gl) // Draw quad
         //virtual push button
-        gl.glTranslatef(0f, 0.0f, 2.0f) // Translate left and into the screen ( NEW )
+        gl.glTranslatef(0f, 0.0f, 2.0f) // Translate left and into the screen
         //circle?.draw(gl) // Draw circle ( NEW )
         pushButton?.draw(gl)
         virtualPushButton?.draw(gl)

@@ -1,26 +1,17 @@
 package com.bea.vieweropengl
 //  Created by BEA on 2021.
 //  Copyright © 2021 BEA. All rights reserved.
-import android.opengl.GLES10.glBlendFunc
-import android.opengl.GLES10.glEnable
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
 import javax.microedition.khronos.opengles.GL10
-import javax.microedition.khronos.opengles.GL10.*
 
 class Cube {
     // Buffer for vertex-array
     private var vertexBuffer : FloatBuffer? = null
     private val numFaces = 6
-
-    /*private val colors = arrayOf(floatArrayOf(1.0f, 0.5f, 0.0f, 1.0f),
-            floatArrayOf(1.0f, 0.5f, 0.0f, 1.0f),
-            floatArrayOf(1.0f, 0.5f, 0.0f, 1.0f),
-            floatArrayOf(1.0f, 0.5f, 0.0f, 1.0f),
-            floatArrayOf(1.0f, 0.5f, 0.0f, 1.0f),
-            floatArrayOf(1.0f, 0.5f, 0.0f, 1.0f))*/
-
+    // Buffer for index-array
+    private var indexBuffer  : ByteBuffer? = null
     // Vertices of the 6 faces
     private val vertices = floatArrayOf(
             // FRONT
@@ -29,30 +20,14 @@ class Cube {
             -1.0f, 1.0f, 1.0f,  // 2. left-top-front
             1.0f, 1.0f, 1.0f,  // 3. right-top-front
             // BACK
-            1.0f, -1.0f, -1.0f,  // 6. right-bottom-back
-            -1.0f, -1.0f, -1.0f,  // 4. left-bottom-back
-            1.0f, 1.0f, -1.0f,  // 7. right-top-back
-            -1.0f, 1.0f, -1.0f,  // 5. left-top-back
-            // LEFT
-            -1.0f, -1.0f, -1.0f,  // 4. left-bottom-back
-            -1.0f, -1.0f, 1.0f,  // 0. left-bottom-front
-            -1.0f, 1.0f, -1.0f,  // 5. left-top-back
-            -1.0f, 1.0f, 1.0f,  // 2. left-top-front
-            // RIGHT
-            1.0f, -1.0f, 1.0f,  // 1. right-bottom-front
-            1.0f, -1.0f, -1.0f,  // 6. right-bottom-back
-            1.0f, 1.0f, 1.0f,  // 3. right-top-front
-            1.0f, 1.0f, -1.0f,  // 7. right-top-back
-            // TOP
-            -1.0f, 1.0f, 1.0f,  // 2. left-top-front
-            1.0f, 1.0f, 1.0f,  // 3. right-top-front
-            -1.0f, 1.0f, -1.0f,  // 5. left-top-back
-            1.0f, 1.0f, -1.0f,  // 7. right-top-back
-            // BOTTOM
             -1.0f, -1.0f, -1.0f,  // 4. left-bottom-back
             1.0f, -1.0f, -1.0f,  // 6. right-bottom-back
-            -1.0f, -1.0f, 1.0f,  // 0. left-bottom-front
-            1.0f, -1.0f, 1.0f // 1. right-bottom-front
+            -1.0f, 1.0f, -1.0f,  // 5. left-top-back
+            1.0f, 1.0f, -1.0f,  // 7. right-top-back
+    )
+    // Vertex indices of the 4 Triangles
+    private val indices = byteArrayOf(
+            0, 1, 2, 3, 7, 1, 5, 4, 7, 6, 2, 4, 0, 1
     )
 
     // Constructor - Set up the buffers
@@ -63,6 +38,11 @@ class Cube {
         vertexBuffer = vbb.asFloatBuffer() // Convert from byte to float
         vertexBuffer?.put(vertices) // Copy data into buffer
         vertexBuffer?.position(0) // Rewind
+
+        // Setup index-array buffer. Indices in byte.
+        indexBuffer = ByteBuffer.allocateDirect(indices.size)
+        indexBuffer?.put(indices)
+        indexBuffer?.position(0)
     }
 
     // Draw the shape
@@ -73,15 +53,15 @@ class Cube {
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY)
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer)
 
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-        glEnable( GL_BLEND )
+        //GLES10.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA)
+        //GLES10.glEnable(GL10.GL_BLEND)
 
         // Render all the faces
         for (face in 0 until numFaces) {
             // Set the color for each of the faces
-            gl.glColor4f(1f,0.4f,0.2f,1f)
+            gl.glColor4f(1f,0.4f,0.2f,0.7f)
             // Draw the primitive from the vertex-array directly
-            gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, face * 4, 4)
+            gl.glDrawElements(GL10.GL_TRIANGLE_STRIP, indices.size, GL10.GL_UNSIGNED_BYTE,indexBuffer)
         }
         gl.glDisableClientState(GL10.GL_VERTEX_ARRAY)
         gl.glDisable(GL10.GL_CULL_FACE)

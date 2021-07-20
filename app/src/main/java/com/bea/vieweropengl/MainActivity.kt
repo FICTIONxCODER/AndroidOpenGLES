@@ -14,7 +14,6 @@ class MainActivity : AppCompatActivity() {
         /*glView = MyGLSurfaceView(this) // Allocate a GLSurfaceView
         glView!!.setRenderer(MyGLRenderer(applicationContext)) // Use a custom renderer
         this.setContentView(glView) // This activity sets to GLSurfaceView*/
-
         // Allocate a custom subclass of GLSurfaceView (NEW)
         glView = MyGLSurfaceView(this);
         setContentView(glView);  // Set View (NEW)

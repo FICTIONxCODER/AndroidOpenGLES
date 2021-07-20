@@ -7,8 +7,8 @@ import android.view.KeyEvent
 import android.view.MotionEvent
 
 class MyGLSurfaceView: GLSurfaceView {
-    var renderer // Custom GL Renderer
-            : MyGLRenderer? = null
+    // Custom GL Renderer
+    var renderer : MyGLRenderer? = null
 
     // For touch event
     private val TOUCH_SCALE_FACTOR = 180.0f / 320.0f

@@ -68,8 +68,7 @@ import javax.microedition.khronos.opengles.GL10
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer)
         gl.glEnableClientState(GL10.GL_COLOR_ARRAY)
         gl.glColorPointer(4, GL10.GL_FLOAT, 0, colorBuffer)
-        gl.glDrawElements(GL10.GL_TRIANGLES, indices.size, GL10.GL_UNSIGNED_BYTE,
-                indexBuffer)
+        gl.glDrawElements(GL10.GL_TRIANGLES, indices.size, GL10.GL_UNSIGNED_BYTE,indexBuffer)
         gl.glDisableClientState(GL10.GL_VERTEX_ARRAY)
         gl.glDisableClientState(GL10.GL_COLOR_ARRAY)
     }
