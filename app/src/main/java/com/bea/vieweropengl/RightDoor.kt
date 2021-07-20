@@ -13,13 +13,6 @@ class RightDoor {
     private var vertexBuffer : FloatBuffer? = null
     private val numFaces = 6
 
-    /*private val colors = arrayOf(floatArrayOf(0.0f, 1.0f, 0.0f, 1.0f),
-            floatArrayOf(0.0f, 1.0f, 0.0f, 1.0f),
-            floatArrayOf(0.0f, 1.0f, 0.0f, 1.0f),
-            floatArrayOf(0.0f, 1.0f, 0.0f, 1.0f),
-            floatArrayOf(0.0f, 1.0f, 0.0f, 1.0f),
-            floatArrayOf(0.0f, 1.0f, 0.0f, 1.0f))*/
-
     // Vertices of the 6 faces
     private val vertices = floatArrayOf(
             // FRONT

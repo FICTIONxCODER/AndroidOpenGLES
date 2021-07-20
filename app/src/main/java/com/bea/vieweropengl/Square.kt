@@ -12,13 +12,14 @@ class Square {
 
     // Vertices for the square
     private val vertices = floatArrayOf(
-            -1.0f, -1.0f, 0.0f,  // 0. left-bottom
-            1.0f, -1.0f, 0.0f,  // 1. right-bottom
-            -1.0f, 1.0f, 0.0f,  // 2. left-top
-            1.0f, 1.0f, 0.0f // 3. right-top
+            -0.2f, 1.0f, 1.0f,  // 0. left-bottom
+            0.2f, 1.0f, 1.0f,  // 1. right-bottom
+            -0.2f, 1.2f, 1.0f,  // 2. left-top
+            0.2f, 1.2f, 1.0f // 3. right-top
     )
 
-    // Constructor - Setup the vertex buffer
+
+// Constructor - Setup the vertex buffer
     constructor() {
         // Setup vertex array buffer. Vertices in float. A float has 4 bytes
         val vbb = ByteBuffer.allocateDirect(vertices.size * 4)
@@ -33,9 +34,9 @@ class Square {
         // Enable vertex-array and define its buffer
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY)
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer)
-        gl.glColor4f(0.5f, 0.5f, 1.0f, 1.0f);      // Set the current color (NEW)
+        gl.glColor4f(0.0f, 0.0f, 0.0f, 1.0f);      // Set the current color (NEW)
         // Draw the primitives from the vertex-array directly
-        gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, vertices.size / 3)
+        gl.glDrawArrays(GL10.GL_TRIANGLE_FAN, 0, vertices.size / 3)
         gl.glDisableClientState(GL10.GL_VERTEX_ARRAY)
     }
 }
