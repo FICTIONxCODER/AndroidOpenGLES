@@ -13,7 +13,7 @@ class Cube {
     // Buffer for index-array
     private var indexBuffer  : ByteBuffer? = null
     // Vertices of the 6 faces
-    private val vertices = floatArrayOf(
+   /* private val vertices = floatArrayOf(
             // FRONT
             -1.0f, -1.0f, 1.0f,  // 0. left-bottom-front
             1.0f, -1.0f, 1.0f,  // 1. right-bottom-front
@@ -24,6 +24,17 @@ class Cube {
             1.0f, -1.0f, -1.0f,  // 6. right-bottom-back
             -1.0f, 1.0f, -1.0f,  // 5. left-top-back
             1.0f, 1.0f, -1.0f,  // 7. right-top-back
+    )*/
+    private val vertices = floatArrayOf(
+            8.50f, 22.0f, -4.50f,
+            -11.00f, 19.50f, -4.50f,
+            11.00f, 2.50f, -4.50f,
+            -8.50f, 0.0f, -4.50f,
+
+            8.50f, 22.00f, 0.50f,
+            -11.00f, 19.50f, 0.50f,
+            11.00f, 2.50f, 0.50f,
+            -8.50f, 0.0f, 0.50f
     )
     // Vertex indices of the 4 Triangles
     private val indices = byteArrayOf(
