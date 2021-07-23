@@ -1,15 +1,10 @@
 package com.bea.vieweropengl
-
-import android.opengl.GLES32.GL_QUADS
+//  Created by BEA on 2021.
+//  Copyright © 2021 BEA. All rights reserved.
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
 import javax.microedition.khronos.opengles.GL10
-
-
-//  Created by BEA on 2021.
-//  Copyright © 2021 BEA. All rights reserved.
-
 
 class Floor {
 
@@ -20,16 +15,10 @@ class Floor {
         val vertices = mutableListOf<Float>()
 
         for (i in -5..5) {
-            for (j in -5..5) {
-                if(j!=10 || i!=10){
-                    vertices.add(i.toFloat())
-                    vertices.add(-1.0f)
-                    vertices.add(j.toFloat())
-                }
-
+                    vertices.add(i.toFloat())   //X cord
+                    vertices.add(-1.0f)         //Y cord
+                    vertices.add(i.toFloat())   //Z cord
             }
-        }
-
         return vertices.toFloatArray()
     }
 

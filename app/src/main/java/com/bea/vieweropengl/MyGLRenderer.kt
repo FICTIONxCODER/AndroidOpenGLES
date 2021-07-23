@@ -86,7 +86,6 @@ class MyGLRenderer : GLSurfaceView.Renderer {
         gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_NICEST) // nice perspective view
         gl.glShadeModel(GL10.GL_SMOOTH) // Enable smooth shading of color
         gl.glDisable(GL10.GL_DITHER) // Disable dithering for better performance
-
     }
 
     // Call back after onSurfaceCreated() or whenever the window's size changes
@@ -156,7 +155,7 @@ class MyGLRenderer : GLSurfaceView.Renderer {
 
         // ----- Render the Cube -----
         gl.glLoadIdentity();              // Reset the model-view matrix
-        gl.glTranslatef(0.0f, 0.0f, z)   // Translate into the screen
+        gl.glTranslatef(0.0f, 0.0f, -25f)   // Translate into the screen
         gl.glRotatef(angleX, 1.0f, 0.0f, 0.0f) // Rotate
         gl.glRotatef(angleY, 0.0f, 1.0f, 0.0f) // Rotate
         cube?.draw(gl)
