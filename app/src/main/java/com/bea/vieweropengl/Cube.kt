@@ -59,7 +59,7 @@ class Cube {
         // Render all the faces
         for (face in 0 until numFaces) {
             // Set the color for each of the faces
-            gl.glColor4f(1f,0.4f,0.2f,0.7f)
+            gl.glColor4f(1.0f,0.4f,0.2f,0.7f)
             // Draw the primitive from the vertex-array directly
             gl.glDrawElements(GL10.GL_TRIANGLE_STRIP, indices.size, GL10.GL_UNSIGNED_BYTE,indexBuffer)
         }

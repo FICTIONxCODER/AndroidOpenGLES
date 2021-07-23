@@ -11,7 +11,7 @@ import javax.microedition.khronos.opengles.GL10
 class MyGLRenderer : GLSurfaceView.Renderer {
 
     var triangle : Triangle? = null
-    //var quad: Square? = null
+    var quad: Square? = null
     private var pyramid : Pyramid? = null
 
     private var cube : Cube? = null
@@ -22,7 +22,10 @@ class MyGLRenderer : GLSurfaceView.Renderer {
 
     private var sensorCone:cone? = null
     private var pushButton:pushButton? = null
-    private var virtualPushButton:VirtualPushButton? =null
+    private var virtualPushButton1:VirtualPushButton? =null
+    private var virtualPushButton2:VirtualPushButton? =null
+    private var floor:Floor? =null
+
     // For controlling cube's z-position, x and y angles and speeds (NEW)
     var angleX = 0f // (NEW)
 
@@ -53,7 +56,7 @@ class MyGLRenderer : GLSurfaceView.Renderer {
 
         triangle = Triangle()
 
-        //quad = Square()
+        quad = Square()
 
         //pyramid = Pyramid() // (NEW)
 
@@ -65,7 +68,9 @@ class MyGLRenderer : GLSurfaceView.Renderer {
         //circle = Circle()
         sensorCone = cone()
         pushButton = pushButton()
-        virtualPushButton = VirtualPushButton()
+        virtualPushButton1 = VirtualPushButton(0.2f,0.7f,-0.5f,-1.0f)
+        virtualPushButton2 = VirtualPushButton(0.2f,-0.7f,0.7f,-1.0f)
+        floor= Floor()
     }
 
     // Call back when the surface is first created or re-created
@@ -159,13 +164,14 @@ class MyGLRenderer : GLSurfaceView.Renderer {
         rightDoor?.draw(gl)
 
 
-        //quad!!.draw(gl) // Draw quad
+        quad!!.draw(gl) // Draw quad
         //virtual push button
         gl.glTranslatef(0f, 0.0f, 2.0f) // Translate left and into the screen
         //circle?.draw(gl) // Draw circle ( NEW )
         pushButton?.draw(gl)
-        virtualPushButton?.draw(gl)
+        virtualPushButton1?.draw(gl,0.2f,0.7f,-0.5f,-1.0f)
+        virtualPushButton2?.draw(gl,0.2f,-0.7f,0.7f,-1.0f)
         sensorCone?.draw(gl)
-
+        floor?.draw(gl)
     }
 }
