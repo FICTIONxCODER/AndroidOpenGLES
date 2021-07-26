@@ -5,6 +5,8 @@ import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
 import javax.microedition.khronos.opengles.GL10
+import kotlin.math.cos
+import kotlin.math.sin
 
 class Cube {
     // Buffer for vertex-array
@@ -25,29 +27,55 @@ class Cube {
             -1.0f, 1.0f, -1.0f,  // 5. left-top-back
             1.0f, 1.0f, -1.0f,  // 7. right-top-back
     )*/
-    private val vertices = floatArrayOf(
-            8.50f, 22.0f, -4.50f,
-            -11.00f, 19.50f, -4.50f,
-            11.00f, 2.50f, -4.50f,
-            -8.50f, 0.0f, -4.50f,
+    private fun SafetyCoordinates(xMin:Float, yMin:Float, zMin:Float, xMax:Float, yMax:Float, zMax:Float):FloatArray {
 
-            8.50f, 22.00f, 0.50f,
-            -11.00f, 19.50f, 0.50f,
-            11.00f, 2.50f, 0.50f,
-            -8.50f, 0.0f, 0.50f
-    )
+        val vertices = mutableListOf<Float>()
+        vertices.add(xMin)					//Left bottom front
+        vertices.add(yMin)
+        vertices.add(zMax)
+
+        vertices.add(xMax)		//Right bottom front
+        vertices.add(yMin)
+        vertices.add(zMax)
+
+        vertices.add(xMin)		//Left Top front
+        vertices.add(yMax)
+        vertices.add(zMax)
+
+        vertices.add(xMax)					//Right Top front
+        vertices.add(yMax)
+        vertices.add(zMax)
+
+        vertices.add(xMin)					//Left bottom back
+        vertices.add(yMin)
+        vertices.add(zMin)
+
+        vertices.add(xMax)		//Right bottom back
+        vertices.add(yMin)
+        vertices.add(zMin)
+
+        vertices.add(xMin)		//Left Top back
+        vertices.add(yMax)
+        vertices.add(zMin)
+
+        vertices.add(xMax)					//Right Top back
+        vertices.add(yMax)
+        vertices.add(zMin)
+
+        return vertices.toFloatArray()
+    }
     // Vertex indices of the 4 Triangles
     private val indices = byteArrayOf(
             0, 1, 2, 3, 7, 1, 5, 4, 7, 6, 2, 4, 0, 1
     )
 
     // Constructor - Set up the buffers
-    constructor() {
+    constructor(xMin:Float, yMin:Float, zMin:Float, xMax:Float, yMax:Float, zMax:Float) {
         // Setup vertex-array buffer. Vertices in float. An float has 4 bytes
-        val vbb: ByteBuffer = ByteBuffer.allocateDirect(vertices.size * 4)
+        val vbb: ByteBuffer = ByteBuffer.allocateDirect(SafetyCoordinates(xMin, yMin, zMin, xMax, yMax, zMax).size * 4)
         vbb.order(ByteOrder.nativeOrder()) // Use native byte order
         vertexBuffer = vbb.asFloatBuffer() // Convert from byte to float
-        vertexBuffer?.put(vertices) // Copy data into buffer
+        vertexBuffer?.put(SafetyCoordinates(xMin, yMin, zMin, xMax, yMax, zMax)) // Copy data into buffer
         vertexBuffer?.position(0) // Rewind
 
         // Setup index-array buffer. Indices in byte.
