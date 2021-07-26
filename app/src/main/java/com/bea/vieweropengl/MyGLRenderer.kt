@@ -15,8 +15,9 @@ class MyGLRenderer : GLSurfaceView.Renderer {
     private var pyramid : Pyramid? = null
 
     private var cube : Cube? = null
-    private var leftdoor : LeftDoor? = null
-    private var rightDoor : RightDoor? = null
+    private var leftdoor1 : LeftDoor? = null
+    private var leftdoor2 : LeftDoor? = null
+    //private var rightDoor : RightDoor? = null
 
     //private var circle:Circle? = null
 
@@ -60,16 +61,16 @@ class MyGLRenderer : GLSurfaceView.Renderer {
 
         //pyramid = Pyramid() // (NEW)
 
-        cube = Cube(-0.85f,0.0f,-0.45f,0.85f,2.20f,0.05f) // (NEW)
-
-        leftdoor = LeftDoor()
-        rightDoor = RightDoor()
+        cube = Cube(-0.85f,0.0f,-0.45f,0.85f,2.20f,0.05f)
+        leftdoor1 = LeftDoor(-1.70f,0.00f,-0.15f,-0.85f,2.20f,0.05f)
+        leftdoor2 = LeftDoor(0.85f,0.00f,-0.15f,1.70f,2.20f,0.05f)
+        //rightDoor = RightDoor()
 
         //circle = Circle()
         sensorCone = cone()
         pushButton = pushButton()
-        virtualPushButton1 = VirtualPushButton(0.2f,0.7f,-0.5f,-1.0f)
-        virtualPushButton2 = VirtualPushButton(0.2f,-0.7f,0.7f,-1.0f)
+        virtualPushButton1 = VirtualPushButton(0.2f,1.2f,1.4f,0.05f)
+        //virtualPushButton2 = VirtualPushButton(0.2f,-0.7f,0.7f,0.05f)
         floor= Floor()
     }
 
@@ -159,18 +160,19 @@ class MyGLRenderer : GLSurfaceView.Renderer {
         gl.glRotatef(angleX, 1.0f, 0.0f, 0.0f) // Rotate
         gl.glRotatef(angleY, 0.0f, 1.0f, 0.0f) // Rotate
         cube?.draw(gl)
-        leftdoor?.draw(gl)
-        rightDoor?.draw(gl)
+        leftdoor1?.draw(gl)
+        leftdoor2?.draw(gl)
+        //rightDoor?.draw(gl)
 
 
         quad!!.draw(gl) // Draw quad
         //virtual push button
-        gl.glTranslatef(0f, 0.0f, 2.0f) // Translate left and into the screen
+        //gl.glTranslatef(0f, 0.0f, 2.0f) // Translate left and into the screen
         //circle?.draw(gl) // Draw circle ( NEW )
-        pushButton?.draw(gl)
-        virtualPushButton1?.draw(gl,0.2f,0.7f,-0.5f,-1.0f)
-        virtualPushButton2?.draw(gl,0.2f,-0.7f,0.7f,-1.0f)
-        sensorCone?.draw(gl)
+        //pushButton?.draw(gl)
+        virtualPushButton1?.draw(gl,0.2f,1.20f,1.40f,0.05f)
+        //virtualPushButton2?.draw(gl,0.2f,-0.7f,0.7f,0.05f)
+        sensorCone?.draw(gl)        //Sensor scan(Umbrela)
         floor?.draw(gl)
     }
 }

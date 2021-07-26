@@ -12,6 +12,8 @@ class LeftDoor {
     // Buffer for vertex-array
     private var vertexBuffer : FloatBuffer? = null
     private val numFaces = 6
+    // Buffer for index-array
+    private var indexBuffer  : ByteBuffer? = null
 
     /*private val colors = arrayOf(floatArrayOf(0.0f, 1.0f, 0.0f, 1.0f),
             floatArrayOf(0.0f, 1.0f, 0.0f, 1.0f),
@@ -21,47 +23,61 @@ class LeftDoor {
             floatArrayOf(0.0f, 1.0f, 0.0f, 1.0f))*/
 
     // Vertices of the 6 faces
-    private val vertices = floatArrayOf(
-            // FRONT
-            -2.0f, -1.0f, 1.0f,  // 0. left-bottom-front
-            -1.0f, -1.0f, 1.0f,  // 1. right-bottom-front
-            -2.0f, 1.0f, 1.0f,  // 2. left-top-front
-            -1.0f, 1.0f, 1.0f,  // 3. right-top-front
-            // BACK
-            -1.0f, -1.0f, 0.7f,  // 6. right-bottom-back
-            -2.0f, -1.0f, 0.7f,  // 4. left-bottom-back
-            -1.0f, 1.0f, 0.7f,  // 7. right-top-back
-            -2.0f, 1.0f, 0.7f,  // 5. left-top-back
-            // LEFT
-            -2.0f, -1.0f, 0.7f,  // 4. left-bottom-back
-            -2.0f, -1.0f, 1.0f,  // 0. left-bottom-front
-            -2.0f, 1.0f, 0.7f,  // 5. left-top-back
-            -2.0f, 1.0f, 1.0f,  // 2. left-top-front
-            // RIGHT
-            -1.0f, -1.0f, 1.0f,  // 1. right-bottom-front
-            -1.0f, -1.0f, 0.7f,  // 6. right-bottom-back
-            -1.0f, 1.0f, 1.0f,  // 3. right-top-front
-            -1.0f, 1.0f, 0.7f,  // 7. right-top-back
-            // TOP
-            -2.0f, 1.0f, 1.0f,  // 2. left-top-front
-            -1.0f, 1.0f, 1.0f,  // 3. right-top-front
-            -2.0f, 1.0f, 0.7f,  // 5. left-top-back
-            -1.0f, 1.0f, 0.7f,  // 7. right-top-back
-            // BOTTOM
-            -2.0f, -1.0f, 0.7f,  // 4. left-bottom-back
-            -1.0f, -1.0f, 0.7f,  // 6. right-bottom-back
-            -2.0f, -1.0f, 1.0f,  // 0. left-bottom-front
-            -1.0f, -1.0f, 1.0f // 1. right-bottom-front
+    private fun SideScreenSafetyCoordinates(xMin:Float, yMin:Float, zMin:Float, xMax:Float, yMax:Float, zMax:Float):FloatArray {
+
+        val vertices = mutableListOf<Float>()
+        vertices.add(xMin)					//Left bottom front
+        vertices.add(yMin)
+        vertices.add(zMax)
+
+        vertices.add(xMax)		//Right bottom front
+        vertices.add(yMin)
+        vertices.add(zMax)
+
+        vertices.add(xMin)		//Left Top front
+        vertices.add(yMax)
+        vertices.add(zMax)
+
+        vertices.add(xMax)					//Right Top front
+        vertices.add(yMax)
+        vertices.add(zMax)
+
+        vertices.add(xMin)					//Left bottom back
+        vertices.add(yMin)
+        vertices.add(zMin)
+
+        vertices.add(xMax)		//Right bottom back
+        vertices.add(yMin)
+        vertices.add(zMin)
+
+        vertices.add(xMin)		//Left Top back
+        vertices.add(yMax)
+        vertices.add(zMin)
+
+        vertices.add(xMax)					//Right Top back
+        vertices.add(yMax)
+        vertices.add(zMin)
+
+        return vertices.toFloatArray()
+    }
+    // Vertex indices of the 4 Triangles
+    private val indices = byteArrayOf(
+            0, 1, 2, 3, 7, 1, 5, 4, 7, 6, 2, 4, 0, 1
     )
 
     // Constructor - Set up the buffers
-    constructor() {
+    constructor(xMin:Float, yMin:Float, zMin:Float, xMax:Float, yMax:Float, zMax:Float) {
         // Setup vertex-array buffer. Vertices in float. An float has 4 bytes
-        val vbb: ByteBuffer = ByteBuffer.allocateDirect(vertices.size * 4)
+        val vbb: ByteBuffer = ByteBuffer.allocateDirect(SideScreenSafetyCoordinates(xMin, yMin, zMin, xMax, yMax, zMax).size * 4)
         vbb.order(ByteOrder.nativeOrder()) // Use native byte order
         vertexBuffer = vbb.asFloatBuffer() // Convert from byte to float
-        vertexBuffer?.put(vertices) // Copy data into buffer
+        vertexBuffer?.put(SideScreenSafetyCoordinates(xMin, yMin, zMin, xMax, yMax, zMax)) // Copy data into buffer
         vertexBuffer?.position(0) // Rewind
+
+        // Setup index-array buffer. Indices in byte.
+        indexBuffer = ByteBuffer.allocateDirect(indices.size)
+        indexBuffer?.put(indices)
+        indexBuffer?.position(0)
     }
 
     // Draw the shape
@@ -81,7 +97,7 @@ class LeftDoor {
             //gl.glColor4f(colors[face][0], colors[face][1], colors[face][2], colors[face][3])
             gl.glColor4f(0.5f,0.7f,0.5f,0.7f)
             // Draw the primitive from the vertex-array directly
-            gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, face * 4, 4)
+            gl.glDrawElements(GL10.GL_TRIANGLE_STRIP, indices.size, GL10.GL_UNSIGNED_BYTE,indexBuffer)
         }
         gl.glDisableClientState(GL10.GL_VERTEX_ARRAY)
         gl.glDisable(GL10.GL_CULL_FACE)

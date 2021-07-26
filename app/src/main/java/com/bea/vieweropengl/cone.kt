@@ -21,11 +21,11 @@ class cone {
 
     // Vertices of the 6 faces
     private val vertices = floatArrayOf(
-            -1.0f, -1.0f, -1.0f,  // 0. left-bottom-back
-            1.0f, -1.0f, -1.0f,  // 1. right-bottom-back
-            1.0f, -1.0f, 1.0f,  // 2. right-bottom-front
-            -1.0f, -1.0f, 1.0f,  // 3. left-bottom-front
-            0.0f, 1.0f, -1.0f   // 4. top
+            -1.0f, 0.0f, 0.05f,  // 0. left-bottom-back
+            1.0f, 0.0f, 0.05f,  // 1. right-bottom-back
+            1.0f, 0.0f, 0.9f,  // 2. right-bottom-front
+            -1.0f, 0.0f, 0.9f,  // 3. left-bottom-front
+            0.0f, 2.20f, 0.05f   // 4. top
     )
 
     private val indices = byteArrayOf( // Vertex indices of the 4 Triangles
