@@ -12,10 +12,10 @@ class Square {
 
     // Vertices for the square
     private val vertices = floatArrayOf(
-            -0.2f, 1.0f, 1.0f,  // 0. left-bottom
-            0.2f, 1.0f, 1.0f,  // 1. right-bottom
-            -0.2f, 1.2f, 1.0f,  // 2. left-top
-            0.2f, 1.2f, 1.0f // 3. right-top
+            -0.2f, 2.20f, 0.0f,  // 0. left-bottom
+            0.2f, 2.20f, 0.0f,  // 1. right-bottom
+            -0.2f, 2.40f, 0.0f,  // 2. left-top
+            0.2f, 2.40f, 0.0f // 3. right-top
     )
 
 
