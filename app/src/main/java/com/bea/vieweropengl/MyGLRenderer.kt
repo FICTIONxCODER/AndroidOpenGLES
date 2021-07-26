@@ -60,7 +60,7 @@ class MyGLRenderer : GLSurfaceView.Renderer {
 
         //pyramid = Pyramid() // (NEW)
 
-        cube = Cube() // (NEW)
+        cube = Cube(-0.85f,0.0f,-0.45f,0.85f,2.20f,0.05f) // (NEW)
 
         leftdoor = LeftDoor()
         rightDoor = RightDoor()
@@ -155,7 +155,7 @@ class MyGLRenderer : GLSurfaceView.Renderer {
 
         // ----- Render the Cube -----
         gl.glLoadIdentity();              // Reset the model-view matrix
-        gl.glTranslatef(0.0f, 0.0f, -25f)   // Translate into the screen
+        gl.glTranslatef(0.0f, 0.0f, z)   // Translate into the screen
         gl.glRotatef(angleX, 1.0f, 0.0f, 0.0f) // Rotate
         gl.glRotatef(angleY, 0.0f, 1.0f, 0.0f) // Rotate
         cube?.draw(gl)
