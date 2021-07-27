@@ -4,6 +4,8 @@ import android.content.Context
 import android.opengl.GLES10.*
 import android.opengl.GLSurfaceView
 import android.opengl.GLU
+import android.util.Log
+import android.util.Log.ASSERT
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
@@ -22,15 +24,15 @@ class MyGLRenderer : GLSurfaceView.Renderer {
     //private var circle:Circle? = null
 
     private var sensorCone:cone? = null
-    private var pushButton:pushButton? = null
+    private var scanArea:ScanArea? = null
     private var virtualPushButton1:VirtualPushButton? =null
     private var virtualPushButton2:VirtualPushButton? =null
     private var floor:Floor? =null
 
-    // For controlling cube's z-position, x and y angles and speeds (NEW)
-    var angleX = 0f // (NEW)
+    // For controlling cube's z-position, x and y angles and speeds (50,-30) for clear floor)otherwise (40,-35)
+    var angleX = 50f // (NEW)
 
-    var angleY = 0f // (NEW)
+    var angleY = -30f // (NEW)
 
     var speedX = 0f // (NEW)
 
@@ -68,8 +70,8 @@ class MyGLRenderer : GLSurfaceView.Renderer {
 
         //circle = Circle()
         sensorCone = cone()
-        pushButton = pushButton()
-        virtualPushButton1 = VirtualPushButton(0.2f,1.2f,1.4f,0.05f)
+        scanArea = ScanArea(-0.85f,0.0f,-0.45f,0.85f,2.20f,0.05f)
+        virtualPushButton1 = VirtualPushButton(1.00f,1.20f,-0.15f,1.20f,1.40f,0.05f)
         //virtualPushButton2 = VirtualPushButton(0.2f,-0.7f,0.7f,0.05f)
         floor= Floor()
     }
@@ -77,8 +79,9 @@ class MyGLRenderer : GLSurfaceView.Renderer {
     // Call back when the surface is first created or re-created
     override fun onSurfaceCreated(gl: GL10, config: EGLConfig?) {
         //Blend & transpency
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-        glEnable( GL_BLEND )
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
         //glClearColor(0.0f,0.0f,0.0f,0.5f)
         gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f) // Set color's clear-value to black
         gl.glClearDepthf(1.0f) // Set depth's clear-value to farthest
@@ -96,7 +99,7 @@ class MyGLRenderer : GLSurfaceView.Renderer {
         val aspect = width.toFloat() / height
 
         // Set the viewport (display area) to cover the entire window
-        gl.glViewport(10, 10, width, height)
+        gl.glViewport(0, 0, width, height)
 
         // Setup perspective projection, with aspect ratio matches viewport
         gl.glMatrixMode(GL10.GL_PROJECTION) // Select projection matrix
@@ -114,7 +117,8 @@ class MyGLRenderer : GLSurfaceView.Renderer {
     override fun onDrawFrame(gl: GL10) {
         // Clear color and depth buffers using clear-value set earlier
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT or GL10.GL_DEPTH_BUFFER_BIT)
-
+        gl.glEnable(GL10.GL_BLEND);       // Turn blending on (NEW)
+        //gl.glDisable(GL10.GL_DEPTH_TEST); // Turn depth testing off (NEW)
         /*// You OpenGL|ES rendering code here
         // Clear color and depth buffers using clear-values set earlier
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT or GL10.GL_DEPTH_BUFFER_BIT)
@@ -153,12 +157,14 @@ class MyGLRenderer : GLSurfaceView.Renderer {
         // Update the rotational angle after each refresh (NEW)
         angleX += speedX;  // (NEW)
         angleY += speedY;  // (NEW)
-
+        Log.e(MyGLRenderer::class.java.simpleName,angleX.toString())
+        Log.e(MyGLRenderer::class.java.simpleName,angleY.toString())
         // ----- Render the Cube -----
         gl.glLoadIdentity();              // Reset the model-view matrix
         gl.glTranslatef(0.0f, 0.0f, z)   // Translate into the screen
         gl.glRotatef(angleX, 1.0f, 0.0f, 0.0f) // Rotate
         gl.glRotatef(angleY, 0.0f, 1.0f, 0.0f) // Rotate
+        floor?.draw(gl)
         cube?.draw(gl)
         leftdoor1?.draw(gl)
         leftdoor2?.draw(gl)
@@ -169,10 +175,10 @@ class MyGLRenderer : GLSurfaceView.Renderer {
         //virtual push button
         //gl.glTranslatef(0f, 0.0f, 2.0f) // Translate left and into the screen
         //circle?.draw(gl) // Draw circle ( NEW )
-        //pushButton?.draw(gl)
-        virtualPushButton1?.draw(gl,0.2f,1.20f,1.40f,0.05f)
+        scanArea?.draw(gl,-0.85f,0.0f,-0.45f,0.85f,2.20f,0.05f)
+        virtualPushButton1?.draw(gl,1.00f,1.20f,-0.15f,1.20f,1.40f,0.05f)
         //virtualPushButton2?.draw(gl,0.2f,-0.7f,0.7f,0.05f)
-        sensorCone?.draw(gl)        //Sensor scan(Umbrela)
+        //sensorCone?.draw(gl)        //Sensor scan(Umbrela)
         floor?.draw(gl)
     }
 }
