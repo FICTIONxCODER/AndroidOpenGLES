@@ -15,12 +15,12 @@ class LeftDoor {
     // Buffer for index-array
     private var indexBuffer  : ByteBuffer? = null
 
-    /*private val colors = arrayOf(floatArrayOf(0.0f, 1.0f, 0.0f, 1.0f),
-            floatArrayOf(0.0f, 1.0f, 0.0f, 1.0f),
-            floatArrayOf(0.0f, 1.0f, 0.0f, 1.0f),
-            floatArrayOf(0.0f, 1.0f, 0.0f, 1.0f),
-            floatArrayOf(0.0f, 1.0f, 0.0f, 1.0f),
-            floatArrayOf(0.0f, 1.0f, 0.0f, 1.0f))*/
+    /*private val colors = arrayOf(floatArrayOf(0.5f,0.7f,0.5f,0.7f),
+            floatArrayOf(0.5f,0.7f,0.5f,0.7f),
+            floatArrayOf(0.5f,0.7f,0.5f,0.7f),
+            floatArrayOf(0.5f,0.7f,0.5f,0.7f),
+            floatArrayOf(0.5f,0.7f,0.5f,0.7f),
+            floatArrayOf(0.5f,0.7f,0.5f,0.7f))*/
 
     // Vertices of the 6 faces
     private fun SideScreenSafetyCoordinates(xMin:Float, yMin:Float, zMin:Float, xMax:Float, yMax:Float, zMax:Float):FloatArray {
@@ -87,9 +87,9 @@ class LeftDoor {
         gl.glCullFace(GL10.GL_BACK) // Cull the back face (don't display)
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY)
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer)
+        GLES10.glEnable(GL10.GL_BLEND)
+        GLES10.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA)
 
-        //GLES10.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA)
-        //GLES10.glEnable(GL10.GL_BLEND)
 
         // Render all the faces
         for (face in 0 until numFaces) {
