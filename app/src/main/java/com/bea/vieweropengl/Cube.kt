@@ -1,6 +1,7 @@
 package com.bea.vieweropengl
 //  Created by BEA on 2021.
 //  Copyright © 2021 BEA. All rights reserved.
+import android.opengl.GLES10
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
@@ -30,37 +31,84 @@ class Cube {
     private fun SafetyCoordinates(xMin:Float, yMin:Float, zMin:Float, xMax:Float, yMax:Float, zMax:Float):FloatArray {
 
         val vertices = mutableListOf<Float>()
-        vertices.add(xMin)					//Left bottom front
+        //FRONT
+        vertices.add(xMin)		//Left bottom front
         vertices.add(yMin)
         vertices.add(zMax)
-
         vertices.add(xMax)		//Right bottom front
         vertices.add(yMin)
         vertices.add(zMax)
-
         vertices.add(xMin)		//Left Top front
         vertices.add(yMax)
         vertices.add(zMax)
-
-        vertices.add(xMax)					//Right Top front
+        vertices.add(xMax)		//Right Top front
         vertices.add(yMax)
         vertices.add(zMax)
-
-        vertices.add(xMin)					//Left bottom back
+        //BACK
+        vertices.add(xMin)	    //Left bottom back
         vertices.add(yMin)
         vertices.add(zMin)
-
         vertices.add(xMax)		//Right bottom back
         vertices.add(yMin)
         vertices.add(zMin)
-
         vertices.add(xMin)		//Left Top back
         vertices.add(yMax)
         vertices.add(zMin)
-
-        vertices.add(xMax)					//Right Top back
+        vertices.add(xMax)		//Right Top back
         vertices.add(yMax)
         vertices.add(zMin)
+        //LEFT
+        vertices.add(xMin)	    //Left bottom back
+        vertices.add(yMin)
+        vertices.add(zMin)
+        vertices.add(xMin)		//Left bottom front
+        vertices.add(yMin)
+        vertices.add(zMax)
+        vertices.add(xMin)		//Left Top back
+        vertices.add(yMax)
+        vertices.add(zMin)
+        vertices.add(xMin)		//Left Top front
+        vertices.add(yMax)
+        vertices.add(zMax)
+        // RIGHT
+        vertices.add(xMax)		//Right bottom front
+        vertices.add(yMin)
+        vertices.add(zMax)
+        vertices.add(xMax)		//Right bottom back
+        vertices.add(yMin)
+        vertices.add(zMin)
+        vertices.add(xMax)		//Right Top front
+        vertices.add(yMax)
+        vertices.add(zMax)
+        vertices.add(xMax)		//Right Top back
+        vertices.add(yMax)
+        vertices.add(zMin)
+        // TOP
+        vertices.add(xMin)		//Left Top front
+        vertices.add(yMax)
+        vertices.add(zMax)
+        vertices.add(xMax)		//Right Top front
+        vertices.add(yMax)
+        vertices.add(zMax)
+        vertices.add(xMin)		//Left Top back
+        vertices.add(yMax)
+        vertices.add(zMin)
+        vertices.add(xMax)		//Right Top back
+        vertices.add(yMax)
+        vertices.add(zMin)
+        // BOTTOM
+        vertices.add(xMin)	    //Left bottom back
+        vertices.add(yMin)
+        vertices.add(zMin)
+        vertices.add(xMax)		//Right bottom back
+        vertices.add(yMin)
+        vertices.add(zMin)
+        vertices.add(xMin)		//Left bottom front
+        vertices.add(yMin)
+        vertices.add(zMax)
+        vertices.add(xMax)		//Right bottom front
+        vertices.add(yMin)
+        vertices.add(zMax)
 
         return vertices.toFloatArray()
     }
@@ -78,10 +126,10 @@ class Cube {
         vertexBuffer?.put(SafetyCoordinates(xMin, yMin, zMin, xMax, yMax, zMax)) // Copy data into buffer
         vertexBuffer?.position(0) // Rewind
 
-        // Setup index-array buffer. Indices in byte.
+        /*// Setup index-array buffer. Indices in byte.
         indexBuffer = ByteBuffer.allocateDirect(indices.size)
         indexBuffer?.put(indices)
-        indexBuffer?.position(0)
+        indexBuffer?.position(0)*/
     }
 
     // Draw the shape
@@ -92,15 +140,16 @@ class Cube {
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY)
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer)
 
-        //GLES10.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA)
-        //GLES10.glEnable(GL10.GL_BLEND)
+        GLES10.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA)
+        GLES10.glEnable(GL10.GL_BLEND)
 
         // Render all the faces
         for (face in 0 until numFaces) {
             // Set the color for each of the faces
             gl.glColor4f(1.0f,0.4f,0.2f,0.7f)
             // Draw the primitive from the vertex-array directly
-            gl.glDrawElements(GL10.GL_TRIANGLE_STRIP, indices.size, GL10.GL_UNSIGNED_BYTE,indexBuffer)
+            //gl.glDrawElements(GL10.GL_TRIANGLE_STRIP, indices.size, GL10.GL_UNSIGNED_BYTE,indexBuffer)
+            gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, face * 4, 4)
         }
         gl.glDisableClientState(GL10.GL_VERTEX_ARRAY)
         gl.glDisable(GL10.GL_CULL_FACE)

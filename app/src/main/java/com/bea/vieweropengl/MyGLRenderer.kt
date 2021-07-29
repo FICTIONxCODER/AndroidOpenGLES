@@ -79,11 +79,11 @@ class MyGLRenderer : GLSurfaceView.Renderer {
     // Call back when the surface is first created or re-created
     override fun onSurfaceCreated(gl: GL10, config: EGLConfig?) {
         //Blend & transpency
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
+        /*glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+        glEnable(GL_BLEND)
+*/
         //glClearColor(0.0f,0.0f,0.0f,0.5f)
-        gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f) // Set color's clear-value to black
+        gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f) // Set color's clear-value to White
         gl.glClearDepthf(1.0f) // Set depth's clear-value to farthest
         gl.glEnable(GL10.GL_DEPTH_TEST) // Enables depth-buffer for hidden surface removal
         gl.glDepthFunc(GL10.GL_LEQUAL) // The type of depth testing to do
@@ -117,7 +117,7 @@ class MyGLRenderer : GLSurfaceView.Renderer {
     override fun onDrawFrame(gl: GL10) {
         // Clear color and depth buffers using clear-value set earlier
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT or GL10.GL_DEPTH_BUFFER_BIT)
-        gl.glEnable(GL10.GL_BLEND);       // Turn blending on (NEW)
+
         //gl.glDisable(GL10.GL_DEPTH_TEST); // Turn depth testing off (NEW)
         /*// You OpenGL|ES rendering code here
         // Clear color and depth buffers using clear-values set earlier
