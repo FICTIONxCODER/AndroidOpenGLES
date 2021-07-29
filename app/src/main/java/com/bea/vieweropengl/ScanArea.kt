@@ -7,9 +7,7 @@ import java.nio.ByteOrder
 import java.nio.FloatBuffer
 import javax.microedition.khronos.opengles.GL10
 import kotlin.math.cos
-import kotlin.math.pow
 import kotlin.math.sin
-import kotlin.math.sqrt
 
 class ScanArea {
 
@@ -17,7 +15,7 @@ class ScanArea {
     // Buffer for vertex-array
     private var vertexBuffer: FloatBuffer? = null
 
-    fun scanAreaCoordinates(xMin:Float, yMin:Float, zMin:Float, xMax:Float, yMax:Float, zMax:Float):FloatArray {
+    fun scanAreaCoordinates(xMin: Float, yMin: Float, zMin: Float, xMax: Float, yMax: Float, zMax: Float):FloatArray {
         //var mid:Double = (((xMax - xMin) / 2 - xMin).toDouble() - xMin).pow(2.0) + (((yMax - yMin) / 2 - yMin).toDouble() - yMin).pow(2.0)
         //var radius: Double = sqrt(mid)
         var radius: Double =1.0
@@ -33,15 +31,16 @@ class ScanArea {
             var zCordinate: Double = sin(angle) * radius
 
             vertices.add(x + xCordinate.toFloat())      //X coordinate added
-            vertices.add( y )                           //Y coordinate added
-            vertices.add(z+ zCordinate.toFloat())       //Z coordinate added
+            vertices.add(y)                           //Y coordinate added
+            vertices.add(z + zCordinate.toFloat())       //Z coordinate added
         }
+
         return vertices.toFloatArray()
     }
 
 
     // Constructor - Setup the vertex buffer
-    constructor(xMin:Float, yMin:Float, zMin:Float, xMax:Float, yMax:Float, zMax:Float) {
+    constructor(xMin: Float, yMin: Float, zMin: Float, xMax: Float, yMax: Float, zMax: Float) {
         // Setup vertex array buffer. Vertices in float. A float has 4 bytes
         val vbb = ByteBuffer.allocateDirect(scanAreaCoordinates(xMin, yMin, zMin, xMax, yMax, zMax).size * 4)
         vbb.order(ByteOrder.nativeOrder()) // Use native byte order
@@ -51,11 +50,11 @@ class ScanArea {
     }
 
     // Render the shape
-    fun draw(gl: GL10,xMin:Float, yMin:Float, zMin:Float, xMax:Float, yMax:Float, zMax:Float) {
+    fun draw(gl: GL10, xMin: Float, yMin: Float, zMin: Float, xMax: Float, yMax: Float, zMax: Float) {
         // Enable vertex-array and define its buffer
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY)
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer)
-        gl.glColor4f(0.0f, 0.5f, 1.0f, 1.0f);      // Set the current color (NEW)
+        gl.glColor4f(0.0f, 0.5f, 1.0f, 0.5f);      // Set the current color (NEW)
         // Draw the primitives from the vertex-array directly
         gl.glDrawArrays(GL10.GL_TRIANGLE_FAN, 0, scanAreaCoordinates(xMin, yMin, zMin, xMax, yMax, zMax).size / 3)
         gl.glDisableClientState(GL10.GL_VERTEX_ARRAY)
