@@ -48,7 +48,7 @@ class ScanningCone {
     fun draw(gl: GL10,xMin: Float, yMin: Float, zMin: Float, xMax: Float, yMax: Float, zMax: Float) {
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY)
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer)
-        gl.glColor4f(0.0f, 0.5f, 1.0f, 0.5f);      // Set the current color (NEW)
+        gl.glColor4f(0.0f, 0.5f, 1.0f, 0.2f);      // Set the current color (NEW)
         // Draw the primitives from the vertex-array directly
         gl.glDrawArrays(GL10.GL_TRIANGLE_FAN,  0,scanSphereCoordinates(xMin, yMin, zMin, xMax, yMax, zMax).size/3)
         gl.glDisableClientState(GL10.GL_VERTEX_ARRAY)

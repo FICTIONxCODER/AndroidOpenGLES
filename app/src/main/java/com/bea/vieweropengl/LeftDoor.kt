@@ -3,6 +3,7 @@ package com.bea.vieweropengl
 //  Copyright © 2021 BEA. All rights reserved.
 
 import android.opengl.GLES10
+import android.util.Log
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
@@ -12,19 +13,9 @@ class LeftDoor {
     // Buffer for vertex-array
     private var vertexBuffer : FloatBuffer? = null
     private val numFaces = 6
-    // Buffer for index-array
-    private var indexBuffer  : ByteBuffer? = null
-
-    /*private val colors = arrayOf(floatArrayOf(0.5f,0.7f,0.5f,0.5f),
-            floatArrayOf(0.5f,0.7f,0.5f,0.5f),
-            floatArrayOf(0.5f,0.7f,0.5f,0.5f),
-            floatArrayOf(0.5f,0.7f,0.5f,0.5f),
-            floatArrayOf(0.5f,0.7f,0.5f,0.5f),
-            floatArrayOf(0.5f,0.7f,0.5f,0.5f))*/
 
     // Vertices of the 6 faces
     private fun SideScreenSafetyCoordinates(xMin:Float, yMin:Float, zMin:Float, xMax:Float, yMax:Float, zMax:Float):FloatArray {
-
         val vertices = mutableListOf<Float>()
         //FRONT
         vertices.add(xMin)		//Left bottom front
@@ -104,12 +95,9 @@ class LeftDoor {
         vertices.add(xMax)		//Right bottom front
         vertices.add(yMin)
         vertices.add(zMax)
+        Log.e(LeftDoor::class.java.simpleName,vertices.toString())
         return vertices.toFloatArray()
     }
-    // Vertex indices of the 4 Triangles
-    private val indices = byteArrayOf(
-            0, 1, 2, 3, 7, 1, 5, 4, 7, 6, 2, 4, 0, 1
-    )
 
     // Constructor - Set up the buffers
     constructor(xMin:Float, yMin:Float, zMin:Float, xMax:Float, yMax:Float, zMax:Float) {
@@ -119,11 +107,6 @@ class LeftDoor {
         vertexBuffer = vbb.asFloatBuffer() // Convert from byte to float
         vertexBuffer?.put(SideScreenSafetyCoordinates(xMin, yMin, zMin, xMax, yMax, zMax)) // Copy data into buffer
         vertexBuffer?.position(0) // Rewind
-
-        /*// Setup index-array buffer. Indices in byte.
-        indexBuffer = ByteBuffer.allocateDirect(indices.size)
-        indexBuffer?.put(indices)
-        indexBuffer?.position(0)*/
     }
 
     // Draw the shape
@@ -134,17 +117,14 @@ class LeftDoor {
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY)
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer)
 
-        GLES10.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA)
-        GLES10.glEnable(GL10.GL_BLEND)
+       /* GLES10.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA)
+        GLES10.glEnable(GL10.GL_BLEND)*/
 
         // Render all the faces
         for (face in 0 until numFaces) {
             // Set the color for each of the faces
-            //gl.glColor4f(colors[face][0], colors[face][1], colors[face][2], colors[face][3])
             gl.glColor4f(0.5f,0.7f,0.5f,0.5f)
             // Draw the primitive from the vertex-array directly
-            //gl.glDrawElements(GL10.GL_TRIANGLE_STRIP, indices.size, GL10.GL_UNSIGNED_BYTE,indexBuffer)
-            //gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, indices.size, GL10.GL_UNSIGNED_BYTE)
             gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, face * 4, 4)
         }
         gl.glDisableClientState(GL10.GL_VERTEX_ARRAY)
