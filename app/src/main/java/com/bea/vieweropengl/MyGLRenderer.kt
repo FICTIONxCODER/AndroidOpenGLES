@@ -1,6 +1,7 @@
 package com.bea.vieweropengl
 
 import android.content.Context
+import android.opengl.GLES10
 import android.opengl.GLSurfaceView
 import android.opengl.GLU
 import android.util.Log
@@ -19,10 +20,11 @@ class MyGLRenderer : GLSurfaceView.Renderer {
     private var scanArea:ScanArea? = null                   //Scan Area on Floor
     private var virtualPushButton1:VirtualPushButton? =null //VOB(Virtual opening button)
     private var floor:Floor? =null                          //Grid
-
+    private var object1:Objects? = null
+    private var object2:Objects? = null
     // For controlling cube's z-position, x and y angles and speeds (50,-30) for clear floor)otherwise (40,-35)
-    var angleX = 50f
-    var angleY = -30f
+    var angleX = 0f
+    var angleY = 0f
     var speedX = 0f
     var speedY = 0f
     var z = -6.0f
@@ -42,6 +44,8 @@ class MyGLRenderer : GLSurfaceView.Renderer {
         scanArea = ScanArea(-0.85f,0.0f,-0.45f,0.85f,2.20f,0.05f)
         virtualPushButton1 = VirtualPushButton(1.00f,1.20f,-0.15f,1.20f,1.40f,0.05f)
         floor= Floor()
+        object1 = Objects(0.0f,0.0f,-0.45f,0.30f,0.70f,-0.25f)
+        object2 = Objects(-1.10f,0.20f,-0.15f,-0.70f,1.30f,0.05f)
     }
 
     // Call back when the surface is first created or re-created
@@ -69,6 +73,8 @@ class MyGLRenderer : GLSurfaceView.Renderer {
         GLU.gluPerspective(gl, 80f, aspect, 0.1f, 100f)
         gl.glMatrixMode(GL10.GL_MODELVIEW) // Select model-view matrix
         gl.glLoadIdentity() // Reset
+        GLES10.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA)
+        GLES10.glEnable(GL10.GL_BLEND)
     }
 
     // Call back to draw the current frame.
@@ -86,6 +92,8 @@ class MyGLRenderer : GLSurfaceView.Renderer {
         gl.glRotatef(angleX, 1.0f, 0.0f, 0.0f) // Rotate
         gl.glRotatef(angleY, 0.0f, 1.0f, 0.0f) // Rotate
         floor?.draw(gl)
+        object1?.draw(gl)
+        object2?.draw(gl)
         cube?.draw(gl)
         leftdoor1?.draw(gl)
         leftdoor2?.draw(gl)
@@ -93,5 +101,6 @@ class MyGLRenderer : GLSurfaceView.Renderer {
         scanArea?.draw(gl,-0.85f,0.0f,-0.45f,0.85f,2.20f,0.05f)
         virtualPushButton1?.draw(gl,1.00f,1.20f,-0.15f,1.20f,1.40f,0.05f)
         scanningCone?.draw(gl,-0.85f,0.0f,-0.45f,0.85f,2.20f,0.05f)
+
     }
 }
