@@ -14,39 +14,6 @@ class Objects {
     private val numFaces = 6
 
     // Vertices of the 6 faces
-    /*private val vertices = floatArrayOf(
-            // FRONT
-            -1.7f, 0.0f, 0.05f,
-            -0.85f, 0.0f, 0.05f,
-            -1.7f, 2.2f, 0.05f,
-            -0.85f, 2.2f, 0.05f,
-
-            -1.7f, 0.0f, -0.15f,
-            -0.85f, 0.0f, -0.15f,
-            -1.7f, 2.2f, -0.15f,
-            -0.85f, 2.2f, -0.15f,
-
-            -1.7f, 0.0f, -0.15f,
-            -1.7f, 0.0f, 0.05f,
-            -1.7f, 2.2f, -0.15f,
-            -1.7f, 2.2f, 0.05f,
-
-            -0.85f, 0.0f, 0.05f,
-            -0.85f, 0.0f, -0.15f,
-            -0.85f, 2.2f, 0.05f,
-            -0.85f, 2.2f, -0.15f,
-
-            -1.7f, 2.2f, 0.05f,
-            -0.85f, 2.2f, 0.05f,
-            -1.7f, 2.2f, -0.15f,
-            -0.85f, 2.2f, -0.15f,
-
-            -1.7f, 0.0f, -0.15f,
-            -0.85f, 0.0f, -0.15f,
-            -1.7f, 0.0f, 0.05f,
-            -0.85f, 0.0f, 0.05f // 1. right-bottom-front
-    )*/
-    // Vertices of the 6 faces
     private fun ObjectCoordinates(xMin:Float, yMin:Float, zMin:Float, xMax:Float, yMax:Float, zMax:Float):FloatArray {
         val vertices = mutableListOf<Float>()
         //FRONT
@@ -144,7 +111,7 @@ class Objects {
     // Draw the shape
     fun draw(gl: GL10) {
         gl.glFrontFace(GL10.GL_CCW) // Front face in counter-clockwise orientation
-        gl.glEnable(GL10.GL_CULL_FACE) // Enable cull face
+        //gl.glEnable(GL10.GL_CULL_FACE) // Enable cull face
         gl.glCullFace(GL10.GL_BACK) // Cull the back face (don't display)
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY)
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer)
@@ -161,6 +128,6 @@ class Objects {
             gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, face * 4, 4)
         }
         gl.glDisableClientState(GL10.GL_VERTEX_ARRAY)
-        gl.glDisable(GL10.GL_CULL_FACE)
+        //gl.glDisable(GL10.GL_CULL_FACE)
     }
 }

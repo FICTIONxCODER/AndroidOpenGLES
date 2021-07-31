@@ -16,18 +16,6 @@ class Cube {
     // Buffer for index-array
     private var indexBuffer  : ByteBuffer? = null
     // Vertices of the 6 faces
-   /* private val vertices = floatArrayOf(
-            // FRONT
-            -1.0f, -1.0f, 1.0f,  // 0. left-bottom-front
-            1.0f, -1.0f, 1.0f,  // 1. right-bottom-front
-            -1.0f, 1.0f, 1.0f,  // 2. left-top-front
-            1.0f, 1.0f, 1.0f,  // 3. right-top-front
-            // BACK
-            -1.0f, -1.0f, -1.0f,  // 4. left-bottom-back
-            1.0f, -1.0f, -1.0f,  // 6. right-bottom-back
-            -1.0f, 1.0f, -1.0f,  // 5. left-top-back
-            1.0f, 1.0f, -1.0f,  // 7. right-top-back
-    )*/
     private fun SafetyCoordinates(xMin:Float, yMin:Float, zMin:Float, xMax:Float, yMax:Float, zMax:Float):FloatArray {
 
         val vertices = mutableListOf<Float>()
@@ -112,10 +100,6 @@ class Cube {
 
         return vertices.toFloatArray()
     }
-    // Vertex indices of the 4 Triangles
-    private val indices = byteArrayOf(
-            0, 1, 2, 3, 7, 1, 5, 4, 7, 6, 2, 4, 0, 1
-    )
 
     // Constructor - Set up the buffers
     constructor(xMin:Float, yMin:Float, zMin:Float, xMax:Float, yMax:Float, zMax:Float) {
@@ -126,22 +110,15 @@ class Cube {
         vertexBuffer?.put(SafetyCoordinates(xMin, yMin, zMin, xMax, yMax, zMax)) // Copy data into buffer
         vertexBuffer?.position(0) // Rewind
 
-        /*// Setup index-array buffer. Indices in byte.
-        indexBuffer = ByteBuffer.allocateDirect(indices.size)
-        indexBuffer?.put(indices)
-        indexBuffer?.position(0)*/
     }
 
     // Draw the shape
     fun draw(gl: GL10) {
         gl.glFrontFace(GL10.GL_CCW) // Front face in counter-clockwise orientation
-        gl.glEnable(GL10.GL_CULL_FACE) // Enable cull face
+        //gl.glEnable(GL10.GL_CULL_FACE) // Enable cull face
         gl.glCullFace(GL10.GL_BACK) // Cull the back face (don't display)
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY)
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer)
-
-        /*GLES10.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA)
-        GLES10.glEnable(GL10.GL_BLEND)*/
 
         // Render all the faces
         for (face in 0 until numFaces) {
@@ -152,6 +129,6 @@ class Cube {
             gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, face * 4, 4)
         }
         gl.glDisableClientState(GL10.GL_VERTEX_ARRAY)
-        gl.glDisable(GL10.GL_CULL_FACE)
+        //gl.glDisable(GL10.GL_CULL_FACE)
     }
 }
