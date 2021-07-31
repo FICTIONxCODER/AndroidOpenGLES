@@ -112,7 +112,7 @@ class LeftDoor {
     // Draw the shape
     fun draw(gl: GL10) {
         gl.glFrontFace(GL10.GL_CCW) // Front face in counter-clockwise orientation
-        gl.glEnable(GL10.GL_CULL_FACE) // Enable cull face
+        //gl.glEnable(GL10.GL_CULL_FACE) // Enable cull face
         gl.glCullFace(GL10.GL_BACK) // Cull the back face (don't display)
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY)
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer)
@@ -128,6 +128,6 @@ class LeftDoor {
             gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, face * 4, 4)
         }
         gl.glDisableClientState(GL10.GL_VERTEX_ARRAY)
-        gl.glDisable(GL10.GL_CULL_FACE)
+        //gl.glDisable(GL10.GL_CULL_FACE)
     }
 }

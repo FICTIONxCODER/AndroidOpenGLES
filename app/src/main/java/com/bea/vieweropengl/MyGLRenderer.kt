@@ -8,9 +8,7 @@ import android.util.Log
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
-
 class MyGLRenderer : GLSurfaceView.Renderer {
-
     //var triangle : Triangle? = null
     var quad: Square? = null                                //Sensor
     private var scanningCone : ScanningCone? = null         //Scanning cone
@@ -23,8 +21,8 @@ class MyGLRenderer : GLSurfaceView.Renderer {
     private var object1:Objects? = null
     private var object2:Objects? = null
     // For controlling cube's z-position, x and y angles and speeds (50,-30) for clear floor)otherwise (40,-35)
-    var angleX = 0f
-    var angleY = 0f
+    var angleX = 50f
+    var angleY = -30f
     var speedX = 0f
     var speedY = 0f
     var z = -6.0f
@@ -94,12 +92,13 @@ class MyGLRenderer : GLSurfaceView.Renderer {
         floor?.draw(gl)
         object1?.draw(gl)
         object2?.draw(gl)
-        cube?.draw(gl)
-        leftdoor1?.draw(gl)
-        leftdoor2?.draw(gl)
         quad!!.draw(gl) // Draw Sensor
         scanArea?.draw(gl,-0.85f,0.0f,-0.45f,0.85f,2.20f,0.05f)
         virtualPushButton1?.draw(gl,1.00f,1.20f,-0.15f,1.20f,1.40f,0.05f)
+
+        cube?.draw(gl)
+        leftdoor1?.draw(gl)
+        leftdoor2?.draw(gl)
         scanningCone?.draw(gl,-0.85f,0.0f,-0.45f,0.85f,2.20f,0.05f)
 
     }
