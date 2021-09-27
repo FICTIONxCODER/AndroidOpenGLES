@@ -117,6 +117,10 @@ class Square {
 
     // Render the shape
     fun draw(gl: GL10,x:Float,y:Float,z:Float) {
+        //Updating points on each draw
+        vertexBuffer?.clear()
+        vertexBuffer?.put(SensorCoordinates(x,y,z))     // Copy data into buffer
+        vertexBuffer?.position(0)             // Rewind
         // Enable vertex-array and define its buffer
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY)
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer)
