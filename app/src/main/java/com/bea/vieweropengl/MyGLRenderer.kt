@@ -95,7 +95,7 @@ class MyGLRenderer : GLSurfaceView.Renderer {
         quad!!.draw(gl,0.0f,2.20f,0f) // Draw Sensor
         scanArea?.draw(gl,-0.85f,0.0f,-0.45f,0.85f,2.20f,0.05f)
         virtualPushButton1?.draw(gl,1.00f,1.20f,-0.15f,1.20f,1.40f,0.05f)
-        cube?.draw(gl)
+        cube?.draw(gl,-0.85f,0.0f,-0.45f,0.85f,2.20f,0.05f)
         leftdoor1?.draw(gl)
         leftdoor2?.draw(gl)
         scanningCone?.draw(gl,0.0f,2.20f,0f)

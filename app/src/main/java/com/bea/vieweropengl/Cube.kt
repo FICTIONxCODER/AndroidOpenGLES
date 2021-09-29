@@ -113,7 +113,11 @@ class Cube {
     }
 
     // Draw the shape
-    fun draw(gl: GL10) {
+    fun draw(gl: GL10,xMin:Float, yMin:Float, zMin:Float, xMax:Float, yMax:Float, zMax:Float) {
+        //Updating points on each draw
+        vertexBuffer?.clear()
+        vertexBuffer?.put(SafetyCoordinates(xMin, yMin, zMin, xMax, yMax, zMax))     // Copy data into buffer
+        vertexBuffer?.position(0)             // Rewind
         gl.glFrontFace(GL10.GL_CCW) // Front face in counter-clockwise orientation
         //gl.glEnable(GL10.GL_CULL_FACE) // Enable cull face
         gl.glCullFace(GL10.GL_BACK) // Cull the back face (don't display)
