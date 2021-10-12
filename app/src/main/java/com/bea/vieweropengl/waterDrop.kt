@@ -5,6 +5,7 @@ import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
 import javax.microedition.khronos.opengles.GL10
+import kotlin.math.PI
 
 //  Created by BEA on 2021.
 //  Copyright © 2021 BEA. All rights reserved.
@@ -18,85 +19,18 @@ class waterDrop {
     // Vertices of the 6 faces
     private fun SideScreenSafetyCoordinates(xMin:Float, yMin:Float, zMin:Float, xMax:Float, yMax:Float, zMax:Float):FloatArray {
         val vertices = mutableListOf<Float>()
-        //FRONT
-        vertices.add(xMin)		//Left bottom front
+        val radius:Float = 10.0f
+        val totalPoints:Float = 100.0f
+        for(i in 0..100){
+            var longitude:Float = mapOf<>(i,0,totalPoints,-PI, PI)
+            for(j in 0..100){
+
+            }
+        }
+        vertices.add(xMax)		//Sphere coordinates
         vertices.add(yMin)
         vertices.add(zMax)
-        vertices.add(xMax)		//Right bottom front
-        vertices.add(yMin)
-        vertices.add(zMax)
-        vertices.add(xMin)		//Left Top front
-        vertices.add(yMax)
-        vertices.add(zMax)
-        vertices.add(xMax)		//Right Top front
-        vertices.add(yMax)
-        vertices.add(zMax)
-        //BACK
-        vertices.add(xMin)	    //Left bottom back
-        vertices.add(yMin)
-        vertices.add(zMin)
-        vertices.add(xMax)		//Right bottom back
-        vertices.add(yMin)
-        vertices.add(zMin)
-        vertices.add(xMin)		//Left Top back
-        vertices.add(yMax)
-        vertices.add(zMin)
-        vertices.add(xMax)		//Right Top back
-        vertices.add(yMax)
-        vertices.add(zMin)
-        //LEFT
-        vertices.add(xMin)	    //Left bottom back
-        vertices.add(yMin)
-        vertices.add(zMin)
-        vertices.add(xMin)		//Left bottom front
-        vertices.add(yMin)
-        vertices.add(zMax)
-        vertices.add(xMin)		//Left Top back
-        vertices.add(yMax)
-        vertices.add(zMin)
-        vertices.add(xMin)		//Left Top front
-        vertices.add(yMax)
-        vertices.add(zMax)
-        // RIGHT
-        vertices.add(xMax)		//Right bottom front
-        vertices.add(yMin)
-        vertices.add(zMax)
-        vertices.add(xMax)		//Right bottom back
-        vertices.add(yMin)
-        vertices.add(zMin)
-        vertices.add(xMax)		//Right Top front
-        vertices.add(yMax)
-        vertices.add(zMax)
-        vertices.add(xMax)		//Right Top back
-        vertices.add(yMax)
-        vertices.add(zMin)
-        // TOP
-        vertices.add(xMin)		//Left Top front
-        vertices.add(yMax)
-        vertices.add(zMax)
-        vertices.add(xMax)		//Right Top front
-        vertices.add(yMax)
-        vertices.add(zMax)
-        vertices.add(xMin)		//Left Top back
-        vertices.add(yMax)
-        vertices.add(zMin)
-        vertices.add(xMax)		//Right Top back
-        vertices.add(yMax)
-        vertices.add(zMin)
-        // BOTTOM
-        vertices.add(xMin)	    //Left bottom back
-        vertices.add(yMin)
-        vertices.add(zMin)
-        vertices.add(xMax)		//Right bottom back
-        vertices.add(yMin)
-        vertices.add(zMin)
-        vertices.add(xMin)		//Left bottom front
-        vertices.add(yMin)
-        vertices.add(zMax)
-        vertices.add(xMax)		//Right bottom front
-        vertices.add(yMin)
-        vertices.add(zMax)
-        Log.e(LeftDoor::class.java.simpleName,vertices.toString())
+        Log.e(waterDrop::class.java.simpleName,vertices.toString())
         return vertices.toFloatArray()
     }
 
