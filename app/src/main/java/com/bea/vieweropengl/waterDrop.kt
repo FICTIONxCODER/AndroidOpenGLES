@@ -5,64 +5,139 @@ import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
 import javax.microedition.khronos.opengles.GL10
-import kotlin.math.PI
+import kotlin.math.cos
+import kotlin.math.sin
 
 //  Created by BEA on 2021.
 //  Copyright © 2021 BEA. All rights reserved.
 
 
 class waterDrop {
+
     // Buffer for vertex-array
-    private var vertexBuffer : FloatBuffer? = null
-    private val numFaces = 6
+    private var vertexBuffer: FloatBuffer? = null
 
-    // Vertices of the 6 faces
-    private fun SideScreenSafetyCoordinates(xMin:Float, yMin:Float, zMin:Float, xMax:Float, yMax:Float, zMax:Float):FloatArray {
+    fun scanAreaCoordinates(xMin: Float, yMin: Float, zMin: Float, xMax: Float, yMax: Float, zMax: Float):FloatArray {
+        //var mid:Double = (((xMax - xMin) / 2 - xMin).toDouble() - xMin).pow(2.0) + (((yMax - yMin) / 2 - yMin).toDouble() - yMin).pow(2.0)
+        //var radius: Double = sqrt(mid)
+        var radius: Double =1.0
+        var x: Float = xMax-((xMax-xMin)/2)          //center of circle
+        var y: Float = 0.0f
+        var z:Float = 1.05f
+        //Log.d(ScanArea::class.java.simpleName, "radius: $radius")
+        //Log.d(ScanArea::class.java.simpleName, "Center: $x,$y,$z")
         val vertices = mutableListOf<Float>()
-        val radius:Float = 10.0f
-        val totalPoints:Float = 100.0f
-        for(i in 0..100){
-            var longitude:Float = mapOf<>(i,0,totalPoints,-PI, PI)
-            for(j in 0..100){
+        for (i in 0..10) {
+            for (j in 0..360) {
+                var angle: Double = (2 * Math.PI * j / 360)
+                var xCordinate: Double = cos(angle) * radius
+                var zCordinate: Double = sin(angle) * radius
 
+                vertices.add(x + xCordinate.toFloat())      //X coordinate added
+                vertices.add(y)                           //Y coordinate added
+                vertices.add(z + zCordinate.toFloat())       //Z coordinate added
             }
         }
-        vertices.add(xMax)		//Sphere coordinates
-        vertices.add(yMin)
-        vertices.add(zMax)
-        Log.e(waterDrop::class.java.simpleName,vertices.toString())
+        generateSphereData(10,10,2.0f)
+
+
         return vertices.toFloatArray()
     }
 
-    // Constructor - Set up the buffers
-    constructor(xMin:Float, yMin:Float, zMin:Float, xMax:Float, yMax:Float, zMax:Float) {
-        // Setup vertex-array buffer. Vertices in float. An float has 4 bytes
-        val vbb: ByteBuffer = ByteBuffer.allocateDirect(SideScreenSafetyCoordinates(xMin, yMin, zMin, xMax, yMax, zMax).size * 4)
+    lateinit var mVertices: FloatArray
+    lateinit var mNormals: FloatArray
+    lateinit var mTexture: FloatArray
+    lateinit var mIndexes: CharArray
+
+    // rings defines how many circles exists from the bottom to the top of the sphere
+    // sectors defines how many vertexes define a single ring
+    // radius defines the distance of every vertex from the center of the sphere.
+    fun generateSphereData(totalRings: Int, totalSectors: Int, radius: Float) {
+        mVertices = FloatArray(totalRings * totalSectors * 3)
+        mNormals = FloatArray(totalRings * totalSectors * 3)
+        mTexture = FloatArray(totalRings * totalSectors * 2)
+        mIndexes = CharArray(totalRings * totalSectors * 6)
+        val R = 1f / (totalRings - 1).toFloat()
+        val S = 1f / (totalSectors - 1).toFloat()
+        var r: Int
+        var s: Int
+        var x: Float
+        var y: Float
+        var z: Float
+        var vertexIndex = 0
+        var textureIndex = 0
+        var indexIndex = 0
+        var normalIndex = 0
+        r = 0
+        while (r < totalRings) {
+            s = 0
+            while (s < totalSectors) {
+                y = Math.sin(-Math.PI / 2f + Math.PI * r * R).toFloat()
+                x = Math.cos(2f * Math.PI * s * S).toFloat() * Math.sin(Math.PI * r * R)
+                    .toFloat()
+                z = Math.sin(2f * Math.PI * s * S).toFloat() * Math.sin(Math.PI * r * R)
+                    .toFloat()
+                if (mTexture != null) {
+                    mTexture!![textureIndex] = s * S
+                    mTexture!![textureIndex + 1] = r * R
+                    textureIndex += 2
+                }
+                mVertices[vertexIndex] = x * radius
+                mVertices[vertexIndex + 1] = y * radius
+                mVertices[vertexIndex + 2] = z * radius
+                vertexIndex += 3
+                mNormals[normalIndex] = x
+                mNormals[normalIndex + 1] = y
+                mNormals[normalIndex + 2] = z
+                normalIndex += 3
+                s++
+            }
+            r++
+        }
+        var r1: Int
+        var s1: Int
+        r = 0
+        while (r < totalRings) {
+            s = 0
+            while (s < totalSectors) {
+                r1 = if (r + 1 == totalRings) 0 else r + 1
+                s1 = if (s + 1 == totalSectors) 0 else s + 1
+                mIndexes[indexIndex] = (r * totalSectors + s).toChar()
+                mIndexes[indexIndex + 1] = (r * totalSectors + s1).toChar()
+                mIndexes[indexIndex + 2] = (r1 * totalSectors + s1).toChar()
+                mIndexes[indexIndex + 3] = (r1 * totalSectors + s).toChar()
+                mIndexes[indexIndex + 4] = (r1 * totalSectors + s1).toChar()
+                mIndexes[indexIndex + 5] = (r * totalSectors + s).toChar()
+                indexIndex += 6
+                s++
+            }
+            r++
+        }
+        Log.d(waterDrop::class.java.simpleName, "mVertices: ${mVertices.asList()}")
+        Log.d(waterDrop::class.java.simpleName, "mNormals: ${mNormals.asList()}")
+        Log.d(waterDrop::class.java.simpleName, "mTexture: ${mTexture.asList()}")
+        Log.d(waterDrop::class.java.simpleName, "mIndexes: ${mIndexes.asList()}")
+    }
+
+    // Constructor - Setup the vertex buffer
+    constructor(xMin: Float, yMin: Float, zMin: Float, xMax: Float, yMax: Float, zMax: Float) {
+        // Setup vertex array buffer. Vertices in float. A float has 4 bytes
+        val vbb = ByteBuffer.allocateDirect(scanAreaCoordinates(xMin, yMin, zMin, xMax, yMax, zMax).size * 4)
         vbb.order(ByteOrder.nativeOrder()) // Use native byte order
         vertexBuffer = vbb.asFloatBuffer() // Convert from byte to float
-        vertexBuffer?.put(SideScreenSafetyCoordinates(xMin, yMin, zMin, xMax, yMax, zMax)) // Copy data into buffer
+        vertexBuffer?.put(mVertices) // Copy data into buffer
         vertexBuffer?.position(0) // Rewind
     }
 
-    // Draw the shape
-    fun draw(gl: GL10) {
-        gl.glFrontFace(GL10.GL_CCW) // Front face in counter-clockwise orientation
-        //gl.glEnable(GL10.GL_CULL_FACE) // Enable cull face
-        gl.glCullFace(GL10.GL_BACK) // Cull the back face (don't display)
+    // Render the shape
+    fun draw(gl: GL10, xMin: Float, yMin: Float, zMin: Float, xMax: Float, yMax: Float, zMax: Float) {
+        // Enable vertex-array and define its buffer
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY)
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer)
-
-        /* GLES10.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA)
-         GLES10.glEnable(GL10.GL_BLEND)*/
-
-        // Render all the faces
-        for (face in 0 until numFaces) {
-            // Set the color for each of the faces
-            gl.glColor4f(0.5f,0.7f,0.5f,0.5f)
-            // Draw the primitive from the vertex-array directly
-            gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, face * 4, 4)
-        }
+        gl.glColor4f(0.0f, 0.5f, 1.0f, 0.5f);      // Set the current color (NEW)
+        // Draw the primitives from the vertex-array directly
+        gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, scanAreaCoordinates(xMin, yMin, zMin, xMax, yMax, zMax).size / 3)
         gl.glDisableClientState(GL10.GL_VERTEX_ARRAY)
-        //gl.glDisable(GL10.GL_CULL_FACE)
     }
+
 }
