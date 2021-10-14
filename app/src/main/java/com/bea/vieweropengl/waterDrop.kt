@@ -130,7 +130,7 @@ class waterDrop {
         vertexBuffer?.position(0) // Rewind
     }
 
-    // Render the shape
+    // Render the shape and update at every refresh
     fun draw(gl: GL10, xMin: Float, yMin: Float, zMin: Float, xMax: Float, yMax: Float, zMax: Float) {
         // Enable vertex-array and define its buffer
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY)
