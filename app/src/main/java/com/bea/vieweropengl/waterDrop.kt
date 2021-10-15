@@ -53,7 +53,7 @@ class waterDrop {
     // sectors defines how many vertexes define a single ring
     // radius defines the distance of every vertex from the center of the sphere.
     fun generateSphereData(totalRings: Int, totalSectors: Int, radius: Float) {
-        mVertices = FloatArray(totalRings * totalSectors * 3)
+        mVertices = FloatArray(totalRings * totalSectors * 3)	//Vertices calculation
         mNormals = FloatArray(totalRings * totalSectors * 3)
         mTexture = FloatArray(totalRings * totalSectors * 2)
         mIndexes = CharArray(totalRings * totalSectors * 6)
