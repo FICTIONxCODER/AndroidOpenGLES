@@ -94,7 +94,7 @@ class waterDrop {
             }
             r++
         }
-        var r1: Int
+        /*var r1: Int
         var s1: Int
         r = 0
         while (r < totalRings) {
@@ -112,7 +112,7 @@ class waterDrop {
                 s++
             }
             r++
-        }
+        }*/
         Log.d(waterDrop::class.java.simpleName, "mVertices: ${mVertices.asList()}")
         Log.d(waterDrop::class.java.simpleName, "mNormals: ${mNormals.asList()}")
         Log.d(waterDrop::class.java.simpleName, "mTexture: ${mTexture.asList()}")
