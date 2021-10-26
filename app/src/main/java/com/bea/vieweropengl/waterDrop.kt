@@ -46,7 +46,7 @@ class waterDrop {
 
     lateinit var mVertices: FloatArray
     lateinit var mNormals: FloatArray
-    lateinit var mTexture: FloatArray
+    //lateinit var mTexture: FloatArray
     lateinit var mIndexes: CharArray
 
     // rings defines how many circles exists from the bottom to the top of the sphere
@@ -55,7 +55,7 @@ class waterDrop {
     fun generateSphereData(totalRings: Int, totalSectors: Int, radius: Float) {
         mVertices = FloatArray(totalRings * totalSectors * 3)	//Vertices calculation
         mNormals = FloatArray(totalRings * totalSectors * 3)
-        mTexture = FloatArray(totalRings * totalSectors * 2)
+        //mTexture = FloatArray(totalRings * totalSectors * 2)
         mIndexes = CharArray(totalRings * totalSectors * 6)
         val R = 1f / (totalRings - 1).toFloat()
         val S = 1f / (totalSectors - 1).toFloat()
@@ -77,11 +77,6 @@ class waterDrop {
                     .toFloat()
                 z = Math.sin(2f * Math.PI * s * S).toFloat() * Math.sin(Math.PI * r * R)
                     .toFloat()
-                if (mTexture != null) {
-                    mTexture!![textureIndex] = s * S
-                    mTexture!![textureIndex + 1] = r * R
-                    textureIndex += 2
-                }
                 mVertices[vertexIndex] = x * radius
                 mVertices[vertexIndex + 1] = y * radius
                 mVertices[vertexIndex + 2] = z * radius
@@ -115,7 +110,7 @@ class waterDrop {
         }*/
         Log.d(waterDrop::class.java.simpleName, "mVertices: ${mVertices.asList()}")
         Log.d(waterDrop::class.java.simpleName, "mNormals: ${mNormals.asList()}")
-        Log.d(waterDrop::class.java.simpleName, "mTexture: ${mTexture.asList()}")
+        //Log.d(waterDrop::class.java.simpleName, "mTexture: ${mTexture.asList()}")
         Log.d(waterDrop::class.java.simpleName, "mIndexes: ${mIndexes.asList()}")
     }
 
