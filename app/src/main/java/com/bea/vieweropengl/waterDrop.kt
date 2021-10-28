@@ -72,10 +72,10 @@ class waterDrop {
         while (r < totalRings) {
             s = 0
             while (s < totalSectors) {
-                y = Math.sin(-Math.PI / 2f + Math.PI * r * R).toFloat()
-                x = Math.cos(2f * Math.PI * s * S).toFloat() * Math.sin(Math.PI * r * R)
+                y = (Math.sin(-Math.PI / 2f + Math.PI * r * R)+1.10).toFloat()
+                x = (Math.cos(2f * Math.PI * s * S).toFloat() * Math.sin(Math.PI * r * R)*0.75)
                     .toFloat()
-                z = Math.sin(2f * Math.PI * s * S).toFloat() * Math.sin(Math.PI * r * R)
+                z = (Math.sin(2f * Math.PI * s * S).toFloat() * Math.sin(Math.PI * r * R)+1)
                     .toFloat()
                 mVertices[vertexIndex] = x * radius
                 mVertices[vertexIndex + 1] = y * radius
@@ -116,7 +116,7 @@ class waterDrop {
 
     // Constructor - Setup the vertex buffer
     constructor(xMin: Float, yMin: Float, zMin: Float, xMax: Float, yMax: Float, zMax: Float) {
-        generateSphereData(100,100,2.0f)
+        generateSphereData(360,360,1.0f)
         // Setup vertex array buffer. Vertices in float. A float has 4 bytes
         val vbb = ByteBuffer.allocateDirect(mVertices.size * 4)
         vbb.order(ByteOrder.nativeOrder()) // Use native byte order
