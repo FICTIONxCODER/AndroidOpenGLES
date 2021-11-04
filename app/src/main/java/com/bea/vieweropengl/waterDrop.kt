@@ -17,33 +17,6 @@ class waterDrop {
     // Buffer for vertex-array
     private var vertexBuffer: FloatBuffer? = null
 
-    /*fun scanAreaCoordinates(xMin: Float, yMin: Float, zMin: Float, xMax: Float, yMax: Float, zMax: Float):FloatArray {
-        //var mid:Double = (((xMax - xMin) / 2 - xMin).toDouble() - xMin).pow(2.0) + (((yMax - yMin) / 2 - yMin).toDouble() - yMin).pow(2.0)
-        //var radius: Double = sqrt(mid)
-        var radius: Double =1.0
-        var x: Float = xMax-((xMax-xMin)/2)          //center of circle
-        var y: Float = 0.0f
-        var z:Float = 1.05f
-        //Log.d(ScanArea::class.java.simpleName, "radius: $radius")
-        //Log.d(ScanArea::class.java.simpleName, "Center: $x,$y,$z")
-        val vertices = mutableListOf<Float>()
-        for (i in 0..10) {
-            for (j in 0..360) {
-                var angle: Double = (2 * Math.PI * j / 360)
-                var xCordinate: Double = cos(angle) * radius
-                var zCordinate: Double = sin(angle) * radius
-
-                vertices.add(x + xCordinate.toFloat())      //X coordinate added
-                vertices.add(y)                           //Y coordinate added
-                vertices.add(z + zCordinate.toFloat())       //Z coordinate added
-            }
-        }
-        generateSphereData(10,10,2.0f)
-
-
-        return vertices.toFloatArray()
-    }*/
-
     lateinit var mVertices: FloatArray
     lateinit var mNormals: FloatArray
     //lateinit var mTexture: FloatArray
