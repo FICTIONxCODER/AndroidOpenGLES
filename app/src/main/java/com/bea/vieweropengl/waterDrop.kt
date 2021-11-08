@@ -19,7 +19,6 @@ class waterDrop {
 
     lateinit var mVertices: FloatArray
     lateinit var mNormals: FloatArray
-    //lateinit var mTexture: FloatArray
     lateinit var mIndexes: CharArray
 
     // rings defines how many circles exists from the bottom to the top of the sphere
@@ -28,7 +27,6 @@ class waterDrop {
     fun generateSphereData(totalRings: Int, totalSectors: Int, radius: Float) {
         mVertices = FloatArray(totalRings * totalSectors * 3)	//Vertices calculation
         mNormals = FloatArray(totalRings * totalSectors * 3)
-        //mTexture = FloatArray(totalRings * totalSectors * 2)
         mIndexes = CharArray(totalRings * totalSectors * 6)
         val R = 1f / (totalRings - 1).toFloat()
         val S = 1f / (totalSectors - 1).toFloat()
@@ -38,8 +36,6 @@ class waterDrop {
         var y: Float
         var z: Float
         var vertexIndex = 0
-        var textureIndex = 0
-        var indexIndex = 0
         var normalIndex = 0
         r = 0
         while (r < totalRings) {
@@ -62,28 +58,9 @@ class waterDrop {
             }
             r++
         }
-        /*var r1: Int
-        var s1: Int
-        r = 0
-        while (r < totalRings) {
-            s = 0
-            while (s < totalSectors) {
-                r1 = if (r + 1 == totalRings) 0 else r + 1
-                s1 = if (s + 1 == totalSectors) 0 else s + 1
-                mIndexes[indexIndex] = (r * totalSectors + s).toChar()
-                mIndexes[indexIndex + 1] = (r * totalSectors + s1).toChar()
-                mIndexes[indexIndex + 2] = (r1 * totalSectors + s1).toChar()
-                mIndexes[indexIndex + 3] = (r1 * totalSectors + s).toChar()
-                mIndexes[indexIndex + 4] = (r1 * totalSectors + s1).toChar()
-                mIndexes[indexIndex + 5] = (r * totalSectors + s).toChar()
-                indexIndex += 6
-                s++
-            }
-            r++
-        }*/
+
         Log.d(waterDrop::class.java.simpleName, "mVertices: ${mVertices.asList()}")
         Log.d(waterDrop::class.java.simpleName, "mNormals: ${mNormals.asList()}")
-        //Log.d(waterDrop::class.java.simpleName, "mTexture: ${mTexture.asList()}")
         Log.d(waterDrop::class.java.simpleName, "mIndexes: ${mIndexes.asList()}")
     }
 
