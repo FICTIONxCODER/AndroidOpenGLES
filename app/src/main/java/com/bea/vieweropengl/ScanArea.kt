@@ -34,7 +34,7 @@ class ScanArea {
             vertices.add(y)                           //Y coordinate added
             vertices.add(z + zCordinate.toFloat())       //Z coordinate added
         }
-
+        Log.d("ScaningArea",vertices.toString())
         return vertices.toFloatArray()
     }
 

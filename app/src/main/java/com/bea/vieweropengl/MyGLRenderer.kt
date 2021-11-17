@@ -36,16 +36,16 @@ class MyGLRenderer : GLSurfaceView.Renderer {
         this.context = context
 
         quad = Square(0.0f,2.20f,0f)
-        //scanningCone = ScanningCone(0.0f,2.20f,0f)
+        scanningCone = ScanningCone(0.0f,2.20f,0f)
         cube = Cube(-0.85f,0.0f,-0.45f,0.85f,2.20f,0.05f)
         leftdoor1 = LeftDoor(-1.70f,0.00f,-0.15f,-0.85f,2.20f,0.05f)
         leftdoor2 = LeftDoor(0.85f,0.00f,-0.15f,1.70f,2.20f,0.05f)
-        //scanArea = ScanArea(-0.85f,0.0f,-0.45f,0.85f,2.20f,0.05f)
+        scanArea = ScanArea(-0.85f,0.0f,-0.45f,0.85f,2.20f,0.05f)
         virtualPushButton1 = VirtualPushButton(1.00f,1.20f,-0.15f,1.20f,1.40f,0.05f)
         floor= Floor()
         object1 = Objects(0.0f,0.0f,-0.45f,0.30f,0.70f,-0.25f)
         object2 = Objects(-1.10f,0.20f,-0.15f,-0.70f,1.30f,0.05f)
-        waterdrop = waterDrop(-1.10f,0.20f,-0.15f,-0.70f,1.30f,0.05f)
+        //waterdrop = waterDrop(-1.10f,0.20f,-0.15f,-0.70f,1.30f,0.05f)
     }
 
     // Call back when the surface is first created or re-created
@@ -95,12 +95,12 @@ class MyGLRenderer : GLSurfaceView.Renderer {
         object1?.draw(gl)
         object2?.draw(gl)
         quad!!.draw(gl,0.0f,2.20f,0f) // Draw Sensor
-        //scanArea?.draw(gl,-0.85f,0.0f,-0.45f,0.85f,2.20f,0.05f)
+        scanArea?.draw(gl,-0.85f,0.0f,-0.45f,0.85f,2.20f,0.05f)
         virtualPushButton1?.draw(gl,1.00f,1.20f,-0.15f,1.20f,1.40f,0.05f)
         cube?.draw(gl,-0.85f,0.0f,-0.45f,0.85f,2.20f,0.05f)
         leftdoor1?.draw(gl)
         leftdoor2?.draw(gl)
-        //scanningCone?.draw(gl,0.0f,2.20f,0f)
-        waterdrop?.draw(gl,-0.85f,0.0f,-0.45f,0.85f,2.20f,0.05f)
+        scanningCone?.draw(gl,0.0f,2.20f,0f)
+        //waterdrop?.draw(gl,-0.85f,0.0f,-0.45f,0.85f,2.20f,0.05f)
     }
 }
