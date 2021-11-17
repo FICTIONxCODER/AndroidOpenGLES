@@ -28,7 +28,7 @@ class ScanningCone {
               vertices.add(0.0f)       //Y coordinate added
               vertices.add((radius * sin(i * Math.PI / 180f) +1.05f).toFloat())      //Z coordinate added
           }
-
+          Log.d("ScaningCone",vertices.toString())
           return vertices.toFloatArray()
       }
 
