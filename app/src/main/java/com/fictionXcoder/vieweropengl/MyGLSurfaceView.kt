@@ -1,6 +1,4 @@
-package com.bea.vieweropengl
-//  Created by BEA on 2021.
-//  Copyright © 2021 BEA. All rights reserved.
+package com.fictionXcoder.vieweropengl
 import android.content.Context
 import android.opengl.GLSurfaceView
 import android.view.KeyEvent
