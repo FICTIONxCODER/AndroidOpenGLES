@@ -1,4 +1,4 @@
-package com.bea.vieweropengl
+package com.fictionXcoder.vieweropengl
 
 import org.junit.Test
 

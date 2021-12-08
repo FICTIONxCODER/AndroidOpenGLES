@@ -1,18 +1,13 @@
-package com.bea.vieweropengl
+package com.fictionXcoder.vieweropengl
 
 import android.util.Log
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
 import javax.microedition.khronos.opengles.GL10
-import kotlin.math.cos
-import kotlin.math.sin
-
-//  Created by BEA on 2021.
-//  Copyright © 2021 BEA. All rights reserved.
 
 
-class waterDrop {
+class Sphere {
 
     // Buffer for vertex-array
     private var vertexBuffer: FloatBuffer? = null
@@ -59,9 +54,9 @@ class waterDrop {
             r++
         }
 
-        Log.d(waterDrop::class.java.simpleName, "mVertices: ${mVertices.asList()}")
-        Log.d(waterDrop::class.java.simpleName, "mNormals: ${mNormals.asList()}")
-        Log.d(waterDrop::class.java.simpleName, "mIndexes: ${mIndexes.asList()}")
+        Log.d(Sphere::class.java.simpleName, "mVertices: ${mVertices.asList()}")
+        Log.d(Sphere::class.java.simpleName, "mNormals: ${mNormals.asList()}")
+        Log.d(Sphere::class.java.simpleName, "mIndexes: ${mIndexes.asList()}")
     }
 
     // Constructor - Setup the vertex buffer

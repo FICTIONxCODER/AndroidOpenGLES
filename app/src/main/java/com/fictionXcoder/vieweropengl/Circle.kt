@@ -1,6 +1,4 @@
-package com.bea.vieweropengl
-//  Created by BEA on 2021.
-//  Copyright © 2021 BEA. All rights reserved.
+package com.fictionXcoder.vieweropengl
 import android.util.Log
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
@@ -14,10 +12,10 @@ class Circle {
     // Buffer for vertex-array
     private var vertexBuffer: FloatBuffer? = null
 
-    fun scanAreaCoordinates():FloatArray {
+    fun CircleCoordinates():FloatArray {
         var radius: Double =1.0
         var x: Float = 0.0f        //center of circle
-        var y: Float = 02.0f
+        var y: Float = 0.0f
         var z:Float = 1.0f
         val vertices = mutableListOf<Float>()
         for (i in 0..10) {
@@ -40,10 +38,10 @@ class Circle {
     // Constructor - Setup the vertex buffer
     constructor() {
         // Setup vertex array buffer. Vertices in float. A float has 4 bytes
-        val vbb = ByteBuffer.allocateDirect(scanAreaCoordinates().size * 4)
+        val vbb = ByteBuffer.allocateDirect(CircleCoordinates().size * 4)
         vbb.order(ByteOrder.nativeOrder()) // Use native byte order
         vertexBuffer = vbb.asFloatBuffer() // Convert from byte to float
-        vertexBuffer?.put(scanAreaCoordinates()) // Copy data into buffer
+        vertexBuffer?.put(CircleCoordinates()) // Copy data into buffer
         vertexBuffer?.position(0) // Rewind
     }
 
@@ -52,9 +50,9 @@ class Circle {
         // Enable vertex-array and define its buffer
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY)
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer)
-        gl.glColor4f(0.0f, 0.5f, 1.0f, 0.5f);      // Set the current color (NEW)
+        gl.glColor4f(0.7f, 0.5f, 1.0f, 0.5f);      // Set the current color (NEW)
         // Draw the primitives from the vertex-array directly
-        gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, scanAreaCoordinates().size / 3)
+        gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, CircleCoordinates().size / 3)
         gl.glDisableClientState(GL10.GL_VERTEX_ARRAY)
     }
 

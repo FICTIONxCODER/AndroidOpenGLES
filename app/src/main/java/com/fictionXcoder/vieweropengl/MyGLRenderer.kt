@@ -1,26 +1,18 @@
-package com.bea.vieweropengl
+package com.fictionXcoder.vieweropengl
 
 import android.content.Context
 import android.opengl.GLES10
 import android.opengl.GLSurfaceView
 import android.opengl.GLU
-import android.util.Log
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
 class MyGLRenderer : GLSurfaceView.Renderer {
-    //var triangle : Triangle? = null
-    var quad: Square? = null                                //Sensor
-    private var scanningCone : ScanningCone? = null         //Scanning cone
-    private var cube : Cube? = null                         //Safety Area
-    private var leftdoor1 : LeftDoor? = null                //SideScreen
-    private var leftdoor2 : LeftDoor? = null                //SideScreen
-    private var scanArea:ScanArea? = null                   //Scan Area on Floor
-    private var virtualPushButton1:VirtualPushButton? =null //VOB(Virtual opening button)
-    private var floor:Floor? =null                          //Grid
-    private var object1:Objects? = null
-    private var object2:Objects? = null
-    private var waterdrop:waterDrop? = null
+    var triangle : Triangle? = null
+    private var cone : Cone? = null
+    private var cube : Cube? = null
+    private var floor:Floor? =null
+    private var sphere:Sphere? = null
     private var circle:Circle? = null
     // For controlling cube's z-position, x and y angles and speeds (50,-30) for clear floor)otherwise (40,-35)
     var angleX = 50f
@@ -35,18 +27,11 @@ class MyGLRenderer : GLSurfaceView.Renderer {
     // Constructor with global application context
     constructor(context: Context?) {
         this.context = context
-
-        quad = Square(0.0f,2.20f,0f)
-        scanningCone = ScanningCone(0.0f,2.20f,0f)
+        triangle = Triangle()
+        cone = Cone(0.0f,2.20f,0f)
         cube = Cube(-0.85f,0.0f,-0.45f,0.85f,2.20f,0.05f)
-        leftdoor1 = LeftDoor(-1.70f,0.00f,-0.15f,-0.85f,2.20f,0.05f)
-        leftdoor2 = LeftDoor(0.85f,0.00f,-0.15f,1.70f,2.20f,0.05f)
-        scanArea = ScanArea(-0.85f,0.0f,-0.45f,0.85f,2.20f,0.05f)
-        virtualPushButton1 = VirtualPushButton(1.00f,1.20f,-0.15f,1.20f,1.40f,0.05f)
         floor= Floor()
-        object1 = Objects(0.0f,0.0f,-0.45f,0.30f,0.70f,-0.25f)
-        object2 = Objects(-1.10f,0.20f,-0.15f,-0.70f,1.30f,0.05f)
-        //waterdrop = waterDrop(-1.10f,0.20f,-0.15f,-0.70f,1.30f,0.05f)
+        sphere = Sphere(-1.10f,0.20f,-0.15f,-0.70f,1.30f,0.05f)
         circle = Circle()
     }
 
@@ -93,17 +78,14 @@ class MyGLRenderer : GLSurfaceView.Renderer {
         gl.glTranslatef(0.0f, 0.0f, z)   // Translate into the screen
         gl.glRotatef(angleX, 1.0f, 0.0f, 0.0f) // Rotate
         gl.glRotatef(angleY, 0.0f, 1.0f, 0.0f) // Rotate
+
         floor?.draw(gl)
-        /*object1?.draw(gl)
-        object2?.draw(gl)
-        quad!!.draw(gl,0.0f,2.20f,0f) // Draw Sensor
-        scanArea?.draw(gl,-0.85f,0.0f,-0.45f,0.85f,2.20f,0.05f)
-        virtualPushButton1?.draw(gl,1.00f,1.20f,-0.15f,1.20f,1.40f,0.05f)
         cube?.draw(gl,-0.85f,0.0f,-0.45f,0.85f,2.20f,0.05f)
-        leftdoor1?.draw(gl)
-        leftdoor2?.draw(gl)
-        scanningCone?.draw(gl,0.0f,2.20f,0f)*/
-        //waterdrop?.draw(gl,-0.85f,0.0f,-0.45f,0.85f,2.20f,0.05f)
+        cone?.draw(gl,0.0f,2.20f,0f)
+        triangle?.draw(gl)
+
+        gl.glTranslatef(3.0f, 0.0f, 0.0f)   // Translate into the screen
         circle?.draw(gl)
+        sphere?.draw(gl,-0.85f,0.0f,-0.45f,0.85f,2.20f,0.05f)
     }
 }
