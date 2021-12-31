@@ -24,7 +24,7 @@ class Cone {
           for (i in 0..360) {
               vertices.add((radius * cos(i * Math.PI / 180f)).toFloat())      //X coordinate added
               vertices.add(0.0f)       //Y coordinate added
-              vertices.add((radius * sin(i * Math.PI / 180f) +1.05f).toFloat())      //Z coordinate added
+              vertices.add((radius * sin(i * Math.PI / 180f)).toFloat())      //Z coordinate added
           }
           Log.d("ScaningCone",vertices.toString())
           return vertices.toFloatArray()
@@ -46,7 +46,7 @@ class Cone {
     fun draw(gl: GL10,x: Float, y: Float, z: Float) {
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY)
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer)
-        gl.glColor4f(0.0f, 0.5f, 1.0f, 0.2f);      // Set the current color (NEW)
+        gl.glColor4f(0.0f, 0.5f, 1.0f, 1.0f);      // Set the current color (NEW)
         // Draw the primitives from the vertex-array directly
         gl.glDrawArrays(GL10.GL_TRIANGLE_FAN,  0,ConeCoordinates(x,y,z).size/3)
         gl.glDisableClientState(GL10.GL_VERTEX_ARRAY)

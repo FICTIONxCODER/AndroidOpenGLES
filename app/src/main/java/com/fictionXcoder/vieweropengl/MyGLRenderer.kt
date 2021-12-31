@@ -19,7 +19,7 @@ class MyGLRenderer : GLSurfaceView.Renderer {
     var angleY = -30f
     var speedX = 0f
     var speedY = 0f
-    var z = -6.0f
+    var z = -10.0f
 
     // Application's context
     var context : Context? = null
@@ -80,12 +80,14 @@ class MyGLRenderer : GLSurfaceView.Renderer {
         gl.glRotatef(angleY, 0.0f, 1.0f, 0.0f) // Rotate
 
         floor?.draw(gl)
-        cube?.draw(gl,-0.85f,0.0f,-0.45f,0.85f,2.20f,0.05f)
+        cube?.draw(gl,-0.85f,0.0f,-0.45f,0.85f,2.20f,1.05f)
+        gl.glTranslatef(0.0f, 0.0f, 04.0f)   // Translate into the screen
         cone?.draw(gl,0.0f,2.20f,0f)
         triangle?.draw(gl)
-
-        gl.glTranslatef(3.0f, 0.0f, 0.0f)   // Translate into the screen
+        gl.glTranslatef(3.0f, 0.0f, -2.0f)   // Translate into the screen
         circle?.draw(gl)
+        gl.glTranslatef(0.0f, 0.0f, -2.0f)   // Translate into the screen
+        //circle?.draw(gl)
         sphere?.draw(gl,-0.85f,0.0f,-0.45f,0.85f,2.20f,0.05f)
     }
 }

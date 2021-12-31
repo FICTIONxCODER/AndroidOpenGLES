@@ -37,9 +37,9 @@ class Sphere {
             s = 0
             while (s < totalSectors) {
                 y = (Math.sin(-Math.PI / 2f + Math.PI * r * R)+1.10).toFloat()
-                x = (Math.cos(2f * Math.PI * s * S).toFloat() * Math.sin(Math.PI * r * R)*0.75)
+                x = (Math.cos(2f * Math.PI * s * S).toFloat() * Math.sin(Math.PI * r * R))
                     .toFloat()
-                z = (Math.sin(2f * Math.PI * s * S).toFloat() * Math.sin(Math.PI * r * R)+1)
+                z = (Math.sin(2f * Math.PI * s * S).toFloat() * Math.sin(Math.PI * r * R))
                     .toFloat()
                 mVertices[vertexIndex] = x * radius
                 mVertices[vertexIndex + 1] = y * radius
