@@ -18,8 +18,8 @@ class Circle {
         var y: Float = 0.0f
         var z:Float = 1.0f
         val vertices = mutableListOf<Float>()
-        for (i in 0..10) {
-            var angle: Double = (2 * Math.PI * i / 10)
+        for (i in 0..360) {
+            var angle: Double = (2 * Math.PI * i / 360)
             var xCordinate: Double = cos(angle) * radius
             var zCordinate: Double = sin(angle) * radius
 
